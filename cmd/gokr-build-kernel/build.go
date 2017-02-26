@@ -876,7 +876,6 @@ func downloadKernel() error {
 	return out.Close()
 }
 
-// TODO(https://github.com/gokrazy/gokrazy/issues/2): remove support for patches
 func applyPatches(srcdir string) error {
 	patches, err := filepath.Glob("*.patch")
 	if err != nil {
@@ -909,9 +908,6 @@ func compile() error {
 	if err := defconfig.Run(); err != nil {
 		return fmt.Errorf("make defconfig: %v", err)
 	}
-
-	// TODO: append to .config
-	// cat >> .config <<'EOT'
 
 	f, err := os.OpenFile(".config", os.O_APPEND|os.O_WRONLY, 0644)
 	if err != nil {

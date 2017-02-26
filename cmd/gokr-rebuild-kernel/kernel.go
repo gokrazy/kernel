@@ -39,9 +39,9 @@ var dockerFileTmpl = template.Must(template.New("dockerfile").
 	}).
 	Parse(dockerFileContents))
 
-// TODO(https://github.com/gokrazy/gokrazy/issues/2): remove support for patches
 var patchFiles = []string{
 	"macaddr.patch",
+	"0001-expose-UART0-ttyAMA0-on-GPIO-14-15-disable-UART1-tty.patch",
 }
 
 func copyFile(dest, src string) error {
