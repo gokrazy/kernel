@@ -33,6 +33,10 @@ CONFIG_RASPBERRYPI_FIRMWARE=y
 CONFIG_RASPBERRYPI_POWER=y
 CONFIG_IPV6=y
 
+# For physically connecting the gokrazy bakery:
+CONFIG_USB_SERIAL=y
+CONFIG_USB_SERIAL_FTDI_SIO=y
+
 # TODO: trim the settings below to the minimum set that works (taken from debian)
 ##
 ## file: arch/arm64/Kconfig
