@@ -1,15 +1,15 @@
-From 2d7722b14e907d7423bd3741c3046265433254ea Mon Sep 17 00:00:00 2001
+From cb8bac026ea5528f34de19cc6e00c4021ab1870f Mon Sep 17 00:00:00 2001
 From: Michael Stapelberg <michael@stapelberg.de>
 Date: Sun, 26 Feb 2017 17:41:36 +0100
 Subject: [PATCH] expose UART0 (ttyAMA0) on GPIO 14/15, disable UART1 (ttyS0)
 
 ---
  arch/arm/boot/dts/bcm283x.dtsi                   |  2 +-
- arch/arm64/boot/dts/broadcom/bcm2837-rpi-3-b.dts | 15 ++++++++++++++-
- 2 files changed, 15 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/broadcom/bcm2837-rpi-3-b.dts | 26 +++++++++++++++++++++++-
+ 2 files changed, 26 insertions(+), 2 deletions(-)
 
 diff --git a/arch/arm/boot/dts/bcm283x.dtsi b/arch/arm/boot/dts/bcm283x.dtsi
-index 74dd21b..c58f13f 100644
+index 74dd21b7..18b52606 100644
 --- a/arch/arm/boot/dts/bcm283x.dtsi
 +++ b/arch/arm/boot/dts/bcm283x.dtsi
 @@ -16,7 +16,7 @@
@@ -17,18 +17,31 @@ index 74dd21b..c58f13f 100644
  
  	chosen {
 -		bootargs = "earlyprintk console=ttyAMA0";
-+		bootargs = "earlyprintk console=ttyAMA0,115200";
++		bootargs = "earlyprintk console=tty1";
  	};
  
  	soc {
 diff --git a/arch/arm64/boot/dts/broadcom/bcm2837-rpi-3-b.dts b/arch/arm64/boot/dts/broadcom/bcm2837-rpi-3-b.dts
-index 4617759..6457835 100644
+index 46177596..15ae055d 100644
 --- a/arch/arm64/boot/dts/broadcom/bcm2837-rpi-3-b.dts
 +++ b/arch/arm64/boot/dts/broadcom/bcm2837-rpi-3-b.dts
-@@ -18,6 +18,19 @@
+@@ -16,8 +16,32 @@
+ 			gpios = <&gpio 47 0>;
+ 		};
  	};
- };
- 
++
++	aliases {
++		/* required for the firmware as per
++		 * https://github.com/raspberrypi/firmware/issues/752#issuecomment-283331328
++		 * */
++		uart0 = &uart0;
++		uart1 = &uart1;
++
++		serial0 = &uart0; /* primary */
++		serial1 = &uart1; /* secondary */
++	};
++};
++
 +&gpio {
 +	uart0_pins: uart0_pins {
 +		brcm,pins = <14 15>;
@@ -40,8 +53,8 @@ index 4617759..6457835 100644
 +&uart0 {
 +	pinctrl-names = "default";
 +	pinctrl-0 = <&uart0_pins>;
-+};
-+
+ };
+ 
  &uart1 {
 -	status = "okay";
 +	status = "disabled";
