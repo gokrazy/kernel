@@ -936,6 +936,9 @@ func compile() error {
 	make.Env = append(os.Environ(),
 		"ARCH=arm64",
 		"CROSS_COMPILE=aarch64-linux-gnu-",
+		"KBUILD_BUILD_USER=gokrazy",
+		"KBUILD_BUILD_HOST=docker",
+		"KBUILD_BUILD_TIMESTAMP=Wed Mar  1 20:57:29 UTC 2017",
 	)
 	make.Stdout = os.Stdout
 	make.Stderr = os.Stderr
