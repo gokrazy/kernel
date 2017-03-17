@@ -40,7 +40,6 @@ var dockerFileTmpl = template.Must(template.New("dockerfile").
 	Parse(dockerFileContents))
 
 var patchFiles = []string{
-	"macaddr.patch",
 	"0001-expose-UART0-ttyAMA0-on-GPIO-14-15-disable-UART1-tty.patch",
 }
 
