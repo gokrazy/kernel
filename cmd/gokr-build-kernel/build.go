@@ -14,7 +14,7 @@ import (
 // see https://www.kernel.org/releases.json
 // NOTE: prefer cdn.kernel.org over www.kernel.org because the latter
 // does not work with HTTP2: https://github.com/golang/go/issues/19035
-var latest = "https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.10.3.tar.xz"
+var latest = "https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.10.6.tar.xz"
 
 const configAddendum = `
 CONFIG_ARCH_BCM2835=y 
