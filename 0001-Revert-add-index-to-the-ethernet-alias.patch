@@ -1,0 +1,46 @@
+From 54eec167af9554c3b7ba2c3c1a79a771adcd7589 Mon Sep 17 00:00:00 2001
+From: Michael Stapelberg <michael@stapelberg.de>
+Date: Sat, 22 Jul 2017 16:00:55 +0200
+Subject: [PATCH] =?UTF-8?q?Revert=20=E2=80=9Cadd=20index=20to=20the=20ethe?=
+ =?UTF-8?q?rnet=20alias=E2=80=9D?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+This is a revert of the following commit:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=10b6c0c2e2bb8cd1be682f8d36ef597e3419cb88
+
+The Raspberry Pi firmware won’t add the local-mac-address property if the
+ethernet alias has an index.
+---
+ arch/arm/boot/dts/bcm283x-rpi-smsc9512.dtsi | 2 +-
+ arch/arm/boot/dts/bcm283x-rpi-smsc9514.dtsi | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm/boot/dts/bcm283x-rpi-smsc9512.dtsi b/arch/arm/boot/dts/bcm283x-rpi-smsc9512.dtsi
+index 9a0599f..12c981e 100644
+--- a/arch/arm/boot/dts/bcm283x-rpi-smsc9512.dtsi
++++ b/arch/arm/boot/dts/bcm283x-rpi-smsc9512.dtsi
+@@ -1,6 +1,6 @@
+ / {
+ 	aliases {
+-		ethernet0 = &ethernet;
++		ethernet = &ethernet;
+ 	};
+ };
+ 
+diff --git a/arch/arm/boot/dts/bcm283x-rpi-smsc9514.dtsi b/arch/arm/boot/dts/bcm283x-rpi-smsc9514.dtsi
+index dc7ae77..3f0a56e 100644
+--- a/arch/arm/boot/dts/bcm283x-rpi-smsc9514.dtsi
++++ b/arch/arm/boot/dts/bcm283x-rpi-smsc9514.dtsi
+@@ -1,6 +1,6 @@
+ / {
+ 	aliases {
+-		ethernet0 = &ethernet;
++		ethernet = &ethernet;
+ 	};
+ };
+ 
+-- 
+2.13.2
+
