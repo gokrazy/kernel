@@ -1,31 +1,17 @@
-From cb8bac026ea5528f34de19cc6e00c4021ab1870f Mon Sep 17 00:00:00 2001
-From: Michael Stapelberg <michael@stapelberg.de>
-Date: Sun, 26 Feb 2017 17:41:36 +0100
-Subject: [PATCH] expose UART0 (ttyAMA0) on GPIO 14/15, disable UART1 (ttyS0)
-
----
- arch/arm/boot/dts/bcm283x.dtsi                   |  2 +-
- arch/arm64/boot/dts/broadcom/bcm2837-rpi-3-b.dts | 26 +++++++++++++++++++++++-
- 2 files changed, 26 insertions(+), 2 deletions(-)
-
-diff --git a/arch/arm/boot/dts/bcm283x.dtsi b/arch/arm/boot/dts/bcm283x.dtsi
-index 74dd21b7..18b52606 100644
---- a/arch/arm/boot/dts/bcm283x.dtsi
-+++ b/arch/arm/boot/dts/bcm283x.dtsi
-@@ -16,7 +16,7 @@
- 	#size-cells = <1>;
+--- ./arch/arm/boot/dts/bcm2837-rpi-3-b.dts.O	2017-11-13 18:31:18.105449225 +0100
++++ ./arch/arm/boot/dts/bcm2837-rpi-3-b.dts	2017-11-13 20:44:54.866639926 +0100
+@@ -10,8 +10,8 @@
+ 	model = "Raspberry Pi 3 Model B";
  
  	chosen {
--		bootargs = "earlyprintk console=ttyAMA0";
+-		/* 8250 auxiliary UART instead of pl011 */
+-		stdout-path = "serial1:115200n8";
++		stdout-path = "";
 +		bootargs = "earlyprintk console=tty1";
  	};
  
- 	soc {
-diff --git a/arch/arm64/boot/dts/broadcom/bcm2837-rpi-3-b.dts b/arch/arm64/boot/dts/broadcom/bcm2837-rpi-3-b.dts
-index 46177596..15ae055d 100644
---- a/arch/arm64/boot/dts/broadcom/bcm2837-rpi-3-b.dts
-+++ b/arch/arm64/boot/dts/broadcom/bcm2837-rpi-3-b.dts
-@@ -16,8 +16,32 @@
+ 	memory {
+@@ -23,20 +23,34 @@
  			gpios = <&gpio 47 0>;
  		};
  	};
@@ -36,12 +22,10 @@ index 46177596..15ae055d 100644
 +		 * */
 +		uart0 = &uart0;
 +		uart1 = &uart1;
-+
-+		serial0 = &uart0; /* primary */
-+		serial1 = &uart1; /* secondary */
 +	};
-+};
-+
+ };
+ 
+-/* uart0 communicates with the BT module */
 +&gpio {
 +	uart0_pins: uart0_pins {
 +		brcm,pins = <14 15>;
@@ -50,15 +34,21 @@ index 46177596..15ae055d 100644
 +	};
 +};
 +
-+&uart0 {
-+	pinctrl-names = "default";
++/* uart0 is mapped to the pin header */
+ &uart0 {
+ 	pinctrl-names = "default";
+-	pinctrl-0 = <&uart0_gpio32 &gpclk2_gpio43>;
 +	pinctrl-0 = <&uart0_pins>;
+ 	status = "okay";
  };
  
+-/* uart1 is mapped to the pin header */
++/* uart1 is disabled */
  &uart1 {
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&uart1_gpio14>;
 -	status = "okay";
 +	status = "disabled";
  };
--- 
-2.11.0
-
+ 
+ /* SDHCI is used to control the SDIO for wireless */
