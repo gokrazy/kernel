@@ -16,7 +16,7 @@ import (
 const dockerFileContents = `
 FROM debian:stretch
 
-RUN apt-get update && apt-get install -y crossbuild-essential-arm64 bc
+RUN apt-get update && apt-get install -y crossbuild-essential-arm64 bc libssl-dev
 
 COPY gokr-build-kernel /usr/bin/gokr-build-kernel
 {{- range $idx, $path := .Patches }}
