@@ -35,6 +35,9 @@ CONFIG_IPV6=y
 CONFIG_USB_SERIAL=y
 CONFIG_USB_SERIAL_FTDI_SIO=y
 
+# For physically connecting the scan2drive USB LCD:
+CONFIG_USB_ACM=y
+
 # TODO: trim the settings below to the minimum set that works (taken from debian)
 ##
 ## file: arch/arm64/Kconfig
