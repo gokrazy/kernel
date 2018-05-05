@@ -95,6 +95,13 @@ func find(filename string) (string, error) {
 }
 
 func main() {
+	cmd := exec.Command("go", "install", "github.com/gokrazy/kernel/cmd/gokr-build-kernel")
+	cmd.Env = append(os.Environ(), "GOOS=linux")
+	cmd.Stderr = os.Stderr
+	if err := cmd.Run(); err != nil {
+		log.Fatalf("%v: %v", cmd.Args, err)
+	}
+
 	buildPath, err := exec.LookPath("gokr-build-kernel")
 	if err != nil {
 		log.Fatal(err)
