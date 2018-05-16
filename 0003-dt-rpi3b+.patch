@@ -1,0 +1,33 @@
+From 9db90175e0d02bf3a9e780c327b0b3ce6321140f Mon Sep 17 00:00:00 2001
+From: Stefan Wahren <stefan.wahren@i2se.com>
+Date: Sat, 21 Apr 2018 13:28:36 +0200
+Subject: dt-bindings: bcm: Add Raspberry Pi 3 B+
+
+This adds the root properties for the Raspberry Pi 3 B+
+
+Signed-off-by: Stefan Wahren <stefan.wahren@i2se.com>
+Reviewed-by: Eric Anholt <eric@anholt.net>
+Reviewed-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Eric Anholt <eric@anholt.net>
+---
+ Documentation/devicetree/bindings/arm/bcm/brcm,bcm2835.txt | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/arm/bcm/brcm,bcm2835.txt b/Documentation/devicetree/bindings/arm/bcm/brcm,bcm2835.txt
+index 3e3efa0..1e3e29a 100644
+--- a/Documentation/devicetree/bindings/arm/bcm/brcm,bcm2835.txt
++++ b/Documentation/devicetree/bindings/arm/bcm/brcm,bcm2835.txt
+@@ -34,6 +34,10 @@ Raspberry Pi 3 Model B
+ Required root node properties:
+ compatible = "raspberrypi,3-model-b", "brcm,bcm2837";
+ 
++Raspberry Pi 3 Model B+
++Required root node properties:
++compatible = "raspberrypi,3-model-b-plus", "brcm,bcm2837";
++
+ Raspberry Pi Compute Module
+ Required root node properties:
+ compatible = "raspberrypi,compute-module", "brcm,bcm2835";
+-- 
+cgit v1.1
+

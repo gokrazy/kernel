@@ -30,6 +30,8 @@ CONFIG_BCM2835_MBOX=y
 CONFIG_RASPBERRYPI_FIRMWARE=y
 CONFIG_RASPBERRYPI_POWER=y
 CONFIG_IPV6=y
+CONFIG_USB_LAN78XX=y
+CONFIG_DYNAMIC_DEBUG=y
 
 # For physically connecting the gokrazy bakery:
 CONFIG_USB_SERIAL=y
@@ -887,6 +889,7 @@ func applyPatches(srcdir string) error {
 		return err
 	}
 	for _, patch := range patches {
+		log.Printf("applying patch %q", patch)
 		f, err := os.Open(patch)
 		if err != nil {
 			return err
@@ -1008,7 +1011,11 @@ func main() {
 		log.Fatal(err)
 	}
 
-	if err := copyFile("/tmp/buildresult/rpi-3-b.dtb", "arch/arm64/boot/dts/broadcom/bcm2837-rpi-3-b.dtb"); err != nil {
+	if err := copyFile("/tmp/buildresult/bcm2710-rpi-3-b.dtb", "arch/arm64/boot/dts/broadcom/bcm2837-rpi-3-b.dtb"); err != nil {
+		log.Fatal(err)
+	}
+
+	if err := copyFile("/tmp/buildresult/bcm2710-rpi-3-b-plus.dtb", "arch/arm64/boot/dts/broadcom/bcm2837-rpi-3-b-plus.dtb"); err != nil {
 		log.Fatal(err)
 	}
 }

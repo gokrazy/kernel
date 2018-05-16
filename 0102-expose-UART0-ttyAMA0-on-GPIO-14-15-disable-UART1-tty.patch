@@ -1,0 +1,69 @@
+--- ./arch/arm/boot/dts/bcm2837-rpi-3-b-plus.dts.O	2018-05-15 20:37:53.678123190 +0200
++++ ./arch/arm/boot/dts/bcm2837-rpi-3-b-plus.dts	2018-05-15 20:37:57.970059074 +0200
+@@ -10,8 +10,8 @@
+ 	model = "Raspberry Pi 3 Model B+";
+ 
+ 	chosen {
+-		/* 8250 auxiliary UART instead of pl011 */
+-		stdout-path = "serial1:115200n8";
++		stdout-path = "";
++		bootargs = "earlyprintk console=tty1";
+ 	};
+ 
+ 	memory {
+@@ -29,12 +29,28 @@
+ 		};
+ 	};
+ 
++	aliases {
++		/* required for the firmware as per
++		 * https://github.com/raspberrypi/firmware/issues/752#issuecomment-283331328
++		 * */
++		uart0 = &uart0;
++		uart1 = &uart1;
++	};
++
+ 	wifi_pwrseq: wifi-pwrseq {
+ 		compatible = "mmc-pwrseq-simple";
+ 		reset-gpios = <&expgpio 1 GPIO_ACTIVE_HIGH>;
+ 	};
+ };
+ 
++&gpio {
++	uart0_pins: uart0_pins {
++		brcm,pins = <14 15>;
++		brcm,function = <BCM2835_FSEL_ALT0>;
++		brcm,pulls = <0 2>;
++	};
++};
++
+ &firmware {
+ 	expgpio: gpio {
+ 		compatible = "raspberrypi,firmware-gpio";
+@@ -87,22 +103,14 @@
+ 	bus-width = <4>;
+ };
+ 
+-/* uart0 communicates with the BT module */
++/* uart0 is mapped to the pin header */ 
+ &uart0 {
+ 	pinctrl-names = "default";
+-	pinctrl-0 = <&uart0_ctsrts_gpio30 &uart0_gpio32 &gpclk2_gpio43>;
++	pinctrl-0 = <&uart0_pins>;
+ 	status = "okay";
+-
+-	bluetooth {
+-		compatible = "brcm,bcm43438-bt";
+-		max-speed = <2000000>;
+-		shutdown-gpios = <&expgpio 0 GPIO_ACTIVE_HIGH>;
+-	};
+ };
+ 
+-/* uart1 is mapped to the pin header */
++/* uart1 is disabled */
+ &uart1 {
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&uart1_gpio14>;
+-	status = "okay";
++	status = "disabled";
+ };

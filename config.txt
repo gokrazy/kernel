@@ -3,5 +3,4 @@ arm_control=0x200
 
 enable_uart=0
 
-device_tree=rpi-3-b.dtb
 kernel=vmlinuz

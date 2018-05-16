@@ -1,0 +1,39 @@
+From 7670ed7a25943a77af64ec4a7247a504e98fe812 Mon Sep 17 00:00:00 2001
+From: Raghuram Chary J <raghuramchary.jallipalli@microchip.com>
+Date: Sat, 28 Apr 2018 11:33:16 +0530
+Subject: lan78xx: Modify error messages
+
+Modify the error messages when phy registration fails.
+
+Signed-off-by: Raghuram Chary J <raghuramchary.jallipalli@microchip.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+---
+ drivers/net/usb/lan78xx.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+(limited to 'drivers/net/usb/lan78xx.c')
+
+diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
+index 54f8db8..9176143 100644
+--- a/drivers/net/usb/lan78xx.c
++++ b/drivers/net/usb/lan78xx.c
+@@ -2100,14 +2100,14 @@ static struct phy_device *lan7801_phy_init(struct lan78xx_net *dev)
+ 		ret = phy_register_fixup_for_uid(PHY_KSZ9031RNX, 0xfffffff0,
+ 						 ksz9031rnx_fixup);
+ 		if (ret < 0) {
+-			netdev_err(dev->net, "fail to register fixup\n");
++			netdev_err(dev->net, "Failed to register fixup for PHY_KSZ9031RNX\n");
+ 			return NULL;
+ 		}
+ 		/* external PHY fixup for LAN8835 */
+ 		ret = phy_register_fixup_for_uid(PHY_LAN8835, 0xfffffff0,
+ 						 lan8835_fixup);
+ 		if (ret < 0) {
+-			netdev_err(dev->net, "fail to register fixup\n");
++			netdev_err(dev->net, "Failed to register fixup for PHY_LAN8835\n");
+ 			return NULL;
+ 		}
+ 		/* add more external PHY fixup here if needed */
+-- 
+cgit v1.1
+

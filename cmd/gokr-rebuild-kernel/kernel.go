@@ -40,8 +40,29 @@ var dockerFileTmpl = template.Must(template.New("dockerfile").
 	Parse(dockerFileContents))
 
 var patchFiles = []string{
-	"0001-expose-UART0-ttyAMA0-on-GPIO-14-15-disable-UART1-tty.patch",
 	"0001-Revert-add-index-to-the-ethernet-alias.patch",
+	// lan78xx patches, cherry-picked from
+	// https://git.kernel.org/pub/scm/linux/kernel/git/davem/net-next.git
+	"0001-lan78xx.patch",
+	"0003-lan78xx.patch",
+	"0004-lan78xx.patch",
+	"0005-lan78xx.patch",
+	"0006-lan78xx.patch",
+	"0007-lan78xx.patch",
+	"0008-lan78xx.patch",
+	"0009-lan78xx.patch",
+	"0010-lan78xx.patch",
+	// device tree patches, cherry-picked from
+	// https://git.kernel.org/pub/scm/linux/kernel/git/arm/arm-soc.git
+	"0000-dt-rpi3b+.patch",
+	"0001-dt-rpi3b+.patch",
+	"0002-dt-rpi3b+.patch",
+	"0003-dt-rpi3b+.patch",
+	"0004-dt-rpi3b+.patch",
+	"0005-dt-rpi3b+.patch",
+	// serial
+	"0101-expose-UART0-ttyAMA0-on-GPIO-14-15-disable-UART1-tty.patch",
+	"0102-expose-UART0-ttyAMA0-on-GPIO-14-15-disable-UART1-tty.patch",
 }
 
 func copyFile(dest, src string) error {
@@ -120,7 +141,11 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	dtbPath, err := find("rpi-3-b.dtb")
+	dtbPath, err := find("bcm2710-rpi-3-b.dtb")
+	if err != nil {
+		log.Fatal(err)
+	}
+	dtbPlusPath, err := find("bcm2710-rpi-3-b-plus.dtb")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -198,7 +223,11 @@ func main() {
 		log.Fatal(err)
 	}
 
-	if err := copyFile(dtbPath, filepath.Join(tmp, "rpi-3-b.dtb")); err != nil {
+	if err := copyFile(dtbPath, filepath.Join(tmp, "bcm2710-rpi-3-b.dtb")); err != nil {
+		log.Fatal(err)
+	}
+
+	if err := copyFile(dtbPlusPath, filepath.Join(tmp, "bcm2710-rpi-3-b-plus.dtb")); err != nil {
 		log.Fatal(err)
 	}
 }
