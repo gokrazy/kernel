@@ -29,4 +29,4 @@ script:
   - go install ./cmd/gokr-rebuild-kernel
   - gokr-rebuild-kernel
   # update pull request
-  - '[ "$TRAVIS_SECURE_ENV_VARS" != "true" ] || (go get -u github.com/gokrazy/autoupdate/cmd/gokr-amend && gokr-amend -set_label=please-boot rpi-3-b.dtb vmlinuz)'
+  - '[ "$TRAVIS_SECURE_ENV_VARS" != "true" ] || (go get -u github.com/gokrazy/autoupdate/cmd/gokr-amend && gokr-amend -set_label=please-boot *.dtb vmlinuz)'
