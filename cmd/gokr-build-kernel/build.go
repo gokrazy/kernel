@@ -40,6 +40,18 @@ CONFIG_USB_SERIAL_FTDI_SIO=y
 # For physically connecting the scan2drive USB LCD:
 CONFIG_USB_ACM=y
 
+# enable simple framebuffer for early boot
+CONFIG_FB_SIMPLE=y
+
+# Enable the vc4 drm driver for HDMI:
+CONFIG_DRM=y
+CONFIG_DRM_VC4=y
+CONFIG_DRM_VC4_HDMI_CEC=y
+
+# Can be dropped once https://patchwork.kernel.org/patch/10376677/ makes it to a
+# mainline Linux kernel:
+CONFIG_CMA_SIZE_MBYTES=32
+
 # TODO: trim the settings below to the minimum set that works (taken from debian)
 ##
 ## file: arch/arm64/Kconfig
