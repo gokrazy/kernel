@@ -53,6 +53,7 @@ CONFIG_DRM_VC4_HDMI_CEC=y
 CONFIG_CMA_SIZE_MBYTES=32
 
 # For using github.com/vishvananda/netlink
+CONFIG_NETFILTER_NETLINK_QUEUE=y
 CONFIG_XFRM_USER=y
 
 # For Apple USB Ethernet adapters:
