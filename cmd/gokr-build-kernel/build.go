@@ -55,6 +55,9 @@ CONFIG_CMA_SIZE_MBYTES=32
 # For using github.com/vishvananda/netlink
 CONFIG_XFRM_USER=y
 
+# For Apple USB Ethernet adapters:
+CONFIG_USB_NET_AX8817X=y
+
 # TODO: trim the settings below to the minimum set that works (taken from debian)
 ##
 ## file: arch/arm64/Kconfig
