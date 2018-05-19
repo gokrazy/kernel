@@ -52,6 +52,9 @@ CONFIG_DRM_VC4_HDMI_CEC=y
 # mainline Linux kernel:
 CONFIG_CMA_SIZE_MBYTES=32
 
+# For using github.com/vishvananda/netlink
+CONFIG_XFRM_USER=y
+
 # TODO: trim the settings below to the minimum set that works (taken from debian)
 ##
 ## file: arch/arm64/Kconfig
