@@ -43,7 +43,6 @@ var patchFiles = []string{
 	"0001-Revert-add-index-to-the-ethernet-alias.patch",
 	// lan78xx patches, cherry-picked from
 	// https://git.kernel.org/pub/scm/linux/kernel/git/davem/net-next.git
-	"0001-lan78xx.patch",
 	"0003-lan78xx.patch",
 	"0004-lan78xx.patch",
 	"0005-lan78xx.patch",
