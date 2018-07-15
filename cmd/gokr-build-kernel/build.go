@@ -36,6 +36,7 @@ CONFIG_DYNAMIC_DEBUG=y
 # For physically connecting the gokrazy bakery:
 CONFIG_USB_SERIAL=y
 CONFIG_USB_SERIAL_FTDI_SIO=y
+CONFIG_USB_SERIAL_CP210X=y
 
 # For physically connecting the scan2drive USB LCD:
 CONFIG_USB_ACM=y
