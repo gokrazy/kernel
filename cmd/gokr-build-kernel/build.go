@@ -101,6 +101,8 @@ CONFIG_IP6_NF_TARGET_REJECT=y
 CONFIG_IP6_NF_MANGLE=y
 CONFIG_LIBCRC32C=y
 
+# For FUSE (for cpu(1)):
+CONFIG_FUSE_FS=y
 
 # TODO: trim the settings below to the minimum set that works (taken from debian)
 ##
