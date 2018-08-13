@@ -41,21 +41,6 @@ var dockerFileTmpl = template.Must(template.New("dockerfile").
 
 var patchFiles = []string{
 	"0001-Revert-add-index-to-the-ethernet-alias.patch",
-	// lan78xx patches, cherry-picked from
-	// https://git.kernel.org/pub/scm/linux/kernel/git/davem/net-next.git
-	"0005-lan78xx.patch",
-	"0006-lan78xx.patch",
-	"0007-lan78xx.patch",
-	"0008-lan78xx.patch",
-	"0009-lan78xx.patch",
-	"0010-lan78xx.patch",
-	// device tree patches, cherry-picked from
-	// https://git.kernel.org/pub/scm/linux/kernel/git/arm/arm-soc.git
-	"0001-dt-rpi3b+.patch",
-	"0002-dt-rpi3b+.patch",
-	"0003-dt-rpi3b+.patch",
-	"0004-dt-rpi3b+.patch",
-	"0005-dt-rpi3b+.patch",
 	// serial
 	"0101-expose-UART0-ttyAMA0-on-GPIO-14-15-disable-UART1-tty.patch",
 	"0102-expose-UART0-ttyAMA0-on-GPIO-14-15-disable-UART1-tty.patch",
