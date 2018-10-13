@@ -12,7 +12,7 @@ import (
 )
 
 // see https://www.kernel.org/releases.json
-var latest = "https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.18.13.tar.xz"
+var latest = "https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.18.14.tar.xz"
 
 const configAddendum = `
 CONFIG_ARCH_BCM2835=y 
