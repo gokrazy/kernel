@@ -49,10 +49,6 @@ CONFIG_DRM=y
 CONFIG_DRM_VC4=y
 CONFIG_DRM_VC4_HDMI_CEC=y
 
-# Can be dropped once https://patchwork.kernel.org/patch/10376677/ makes it to a
-# mainline Linux kernel:
-CONFIG_CMA_SIZE_MBYTES=32
-
 # For using github.com/vishvananda/netlink
 CONFIG_NETFILTER_NETLINK_QUEUE=y
 CONFIG_XFRM_USER=y
