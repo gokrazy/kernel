@@ -192,7 +192,7 @@ func main() {
 	dockerRun := exec.Command("docker",
 		"run",
 		"--rm",
-		"--volume", tmp+":/tmp/buildresult",
+		"--volume", tmp+":/tmp/buildresult:Z",
 		"gokr-rebuild-kernel")
 	dockerRun.Dir = tmp
 	dockerRun.Stdout = os.Stdout
