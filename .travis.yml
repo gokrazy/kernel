@@ -1,10 +1,6 @@
-# Use the (faster) container-based infrastructure, see also
-# http://docs.travis-ci.com/user/workers/container-based-infrastructure/
-sudo: false
-
 language: go
 go:
-  - 1.8
+  - "1.14"
 
 env:
   global:
