@@ -13,4 +13,4 @@ env:
   - secure: "sp4jsbv8oxcGnNkdH2SEA2V/8v0Y2Bgn8eveBnjc6j/PD8eB775UVBvpd+gw57TZdtssSLunIXepxU4VldEMPNYPv0NaCFKrgfg9qJhVpOnIm86wRhI+6IL05e5OZ0vPnyGzcUNAVugpCEfwzUr2fETWOlTcZ7QebiA8gYY1agkNIUla27Ox9m6bkDglZc6rIVyD2kmSKRUojQaZ6w6jO30q5aC4e7hEde7pPQGxoMG8XH2YUH1mzhIMORsBnUvXF4LALsyFCefta/D8SfoKmwH/4XVzBDcIPnw/d0jtjO+WU+y8wFmaKmkkf/zIBj5MI3OyGH36uMoqCgW8wTkZjctZl23DEeCkQ2b/oDfOIzqKr7M+MsAKnIJWUB0o1kPD2kjDjORnUxcY5/+wPu+54L0q2Ifq+6dHakdzjc5uW+1xVDzGUP8YGdrkzRgDIvwjK3I5F1rfBj7Nfn0t7jNwChwLOWGzgiWhM0Pi531yYDdaxM/VaKC3FKCJS65z9QBnjPUXkkx7y0Q2wet+uV41udAxi5eWgTpRG2zHwKPael3Dae5FBfAhgBzAzx0AVyll+OHBm/brTwPioqvg+2bGDx0UUxnRkzHSfSCvv9l2Iv9nVLkWCNlF9WdEQs09qPvHl1JxSOROsr8VPdKI9I2ZRcKp8ZQenoAPOI2LfmgvwQk="
 
 script:
-  - '[ "$TRAVIS_SECURE_ENV_VARS" != "true" ] || { go get -u github.com/gokrazy/autoupdate/cmd/gokr-pull-kernel && gokr-pull-kernel; }'
+  - '[ "$TRAVIS_SECURE_ENV_VARS" != "true" ] || { go mod init cron && go get -u github.com/gokrazy/autoupdate/cmd/gokr-pull-kernel && gokr-pull-kernel; }'
