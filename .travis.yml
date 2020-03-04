@@ -6,9 +6,12 @@ services:
 
 language: go
 go:
-  - 1.12
+  - "1.14"
 
 env:
+  jobs:
+  - GO111MODULE=on
+
   global:
   # GITHUB_USER
   - secure: "Wm9n1YY2NovdTeZZxhkN8rKkojW72KDAmoeRnD1bCJHpPURkfIoe9CrbotTjBbBN28ISplErUhZESMINe5FAPgxrsF+AEpgPuyXH/WVZrxhj+1bM3xtfCiPj9PAkLBOibe9DPTs8G/5q4g8JVoXZZEyFbKai8BGl/bGYXTEsMh+Ew41HHjHa8bjNDoQds9MB3cNW7OxsM1kic11mtLLdfChBDjiNnxH0VUIlnYy1rObRlr6aUljKGj2ykK3MghoE+wt3HM0a7v+57Q4LlRhQggKIfhGfCXcZRao5ZvE+1hnPl3WFGAgltiu8+3uMzyqKNixr/osQvzcuummrLfWizorNsTBRgqw+l6KGkup7x6NE5KTXLmQr5V7ONUWwUk10KEYd9g8V9SOTdbh5I1n4UHRzeYjsK4hYKZpuwzcWHRcAbPbP6e9930Onsjom8Cypl/pjoSUxDQqBAOwcfcCFEotzS2doDI7RrReN6BKndEBlp6hflUoNVgIw8Xl8YmNsXvGBZ2BEZMy1OAt4ptwP+98QqxjLRSfzDcRMaVmHuc6WMQZYimP8bszVBWq2EerhIvNmk3F6LXuYwQRNL1ZOyIuC1TVfeUHHYawROTzX/sB+gectt/9BybZ2/L+VxlbPvZQLxMPmnUDNmKNUUvDjGoZ8+Ju4mUOFjr4uaTNSC5s="
