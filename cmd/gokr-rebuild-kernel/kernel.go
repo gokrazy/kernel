@@ -96,7 +96,28 @@ func find(filename string) (string, error) {
 	return "", fmt.Errorf("could not find file %q (looked in . and %s)", filename, path)
 }
 
+func getContainerExecutable() (string, error) {
+	choices := []string{"docker", "podman"}
+	for _, exe := range choices {
+		p, err := exec.LookPath(exe)
+		if err != nil {
+			continue
+		}
+		resolved, err := filepath.EvalSymlinks(p)
+		if err != nil {
+			return "", err
+		}
+		return resolved, nil
+	}
+	return "", fmt.Errorf("none of %v found in $PATH", choices)
+}
+
 func main() {
+	executable, err := getContainerExecutable()
+	if err != nil {
+		log.Fatal(err)
+	}
+	execName := filepath.Base(executable)
 	// We explicitly use /tmp, because Docker only allows volume mounts under
 	// certain paths on certain platforms, see
 	// e.g. https://docs.docker.com/docker-for-mac/osxfs/#namespaces for macOS.
@@ -172,9 +193,9 @@ func main() {
 		log.Fatal(err)
 	}
 
-	log.Printf("building docker container for kernel compilation")
+	log.Printf("building %s container for kernel compilation", execName)
 
-	dockerBuild := exec.Command("docker",
+	dockerBuild := exec.Command(execName,
 		"build",
 		"--rm=true",
 		"--tag=gokr-rebuild-kernel",
@@ -183,21 +204,31 @@ func main() {
 	dockerBuild.Stdout = os.Stdout
 	dockerBuild.Stderr = os.Stderr
 	if err := dockerBuild.Run(); err != nil {
-		log.Fatalf("docker build: %v (cmd: %v)", err, dockerBuild.Args)
+		log.Fatalf("%s build: %v (cmd: %v)", execName, err, dockerBuild.Args)
 	}
 
 	log.Printf("compiling kernel")
 
-	dockerRun := exec.Command("docker",
-		"run",
-		"--rm",
-		"--volume", tmp+":/tmp/buildresult:Z",
-		"gokr-rebuild-kernel")
+	var dockerRun *exec.Cmd
+	if execName == "podman" {
+		dockerRun = exec.Command(executable,
+			"run",
+			"--userns=keep-id",
+			"--rm",
+			"--volume", tmp+":/tmp/buildresult:Z",
+			"gokr-rebuild-kernel")
+	} else {
+		dockerRun = exec.Command(executable,
+			"run",
+			"--rm",
+			"--volume", tmp+":/tmp/buildresult:Z",
+			"gokr-rebuild-kernel")
+	}
 	dockerRun.Dir = tmp
 	dockerRun.Stdout = os.Stdout
 	dockerRun.Stderr = os.Stderr
 	if err := dockerRun.Run(); err != nil {
-		log.Fatalf("docker run: %v (cmd: %v)", err, dockerRun.Args)
+		log.Fatalf("%s run: %v (cmd: %v)", execName, err, dockerRun.Args)
 	}
 
 	if err := copyFile(kernelPath, filepath.Join(tmp, "vmlinuz")); err != nil {
