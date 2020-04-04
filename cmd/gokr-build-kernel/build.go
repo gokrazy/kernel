@@ -1054,7 +1054,7 @@ func main() {
 
 	log.Printf("unpacking kernel source")
 	if err := exec.Command("tar", "xf", filepath.Base(latest)).Run(); err != nil {
-		log.Fatal("untar: %v", err)
+		log.Fatalf("untar: %v", err)
 	}
 
 	srcdir := strings.TrimSuffix(filepath.Base(latest), ".tar.xz")
@@ -1082,6 +1082,10 @@ func main() {
 	}
 
 	if err := copyFile("/tmp/buildresult/bcm2710-rpi-3-b-plus.dtb", "arch/arm64/boot/dts/broadcom/bcm2837-rpi-3-b-plus.dtb"); err != nil {
+		log.Fatal(err)
+	}
+
+	if err := copyFile("/tmp/buildresult/bcm2711-rpi-4-b.dtb", "arch/arm64/boot/dts/broadcom/bcm2711-rpi-4-b.dtb"); err != nil {
 		log.Fatal(err)
 	}
 }

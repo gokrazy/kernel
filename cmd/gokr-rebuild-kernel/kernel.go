@@ -44,6 +44,7 @@ var patchFiles = []string{
 	// serial
 	"0101-expose-UART0-ttyAMA0-on-GPIO-14-15-disable-UART1-tty.patch",
 	"0102-expose-UART0-ttyAMA0-on-GPIO-14-15-disable-UART1-tty.patch",
+	"0103-expose-UART0-ttyAMA0-on-GPIO-14-15-disable-UART1-tty.patch",
 }
 
 func copyFile(dest, src string) error {
@@ -157,6 +158,10 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	dtb4Path, err := find("bcm2711-rpi-4-b.dtb")
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	// Copy all files into the temporary directory so that docker
 	// includes them in the build context.
@@ -242,4 +247,9 @@ func main() {
 	if err := copyFile(dtbPlusPath, filepath.Join(tmp, "bcm2710-rpi-3-b-plus.dtb")); err != nil {
 		log.Fatal(err)
 	}
+
+	if err := copyFile(dtb4Path, filepath.Join(tmp, "bcm2711-rpi-4-b.dtb")); err != nil {
+		log.Fatal(err)
+	}
+
 }
