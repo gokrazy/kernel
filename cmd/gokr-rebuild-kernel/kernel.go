@@ -41,6 +41,7 @@ var dockerFileTmpl = template.Must(template.New("dockerfile").
 
 var patchFiles = []string{
 	"0001-Revert-add-index-to-the-ethernet-alias.patch",
+	"0004-rpi4b-phy-mode-rgmii.patch",
 	// serial
 	"0101-expose-UART0-ttyAMA0-on-GPIO-14-15-disable-UART1-tty.patch",
 	"0102-expose-UART0-ttyAMA0-on-GPIO-14-15-disable-UART1-tty.patch",
