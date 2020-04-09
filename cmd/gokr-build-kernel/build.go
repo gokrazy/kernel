@@ -34,6 +34,11 @@ CONFIG_USB_LAN78XX=y
 CONFIG_DYNAMIC_DEBUG=y
 CONFIG_BCMGENET=y
 
+# For the VL805 USB host controller on the Raspberry Pi 4:
+CONFIG_PCIE_BRCMSTB=y
+CONFIG_USB_NET_CDCETHER=y
+CONFIG_USB_VL600=y
+
 # For physically connecting the gokrazy bakery:
 CONFIG_USB_SERIAL=y
 CONFIG_USB_SERIAL_FTDI_SIO=y
