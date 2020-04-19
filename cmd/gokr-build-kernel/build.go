@@ -111,6 +111,10 @@ CONFIG_FUSE_FS=y
 
 # For periph.io:
 CONFIG_GPIO_SYSFS=y
+CONFIG_SPI_SPIDEV=y
+CONFIG_SPI_GPIO=y
+CONFIG_GPIOLIB=y
+CONFIG_GPIOLIB_IRQCHIP=y
 
 # TODO: trim the settings below to the minimum set that works (taken from debian)
 ##

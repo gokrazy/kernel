@@ -46,6 +46,8 @@ var patchFiles = []string{
 	"0101-expose-UART0-ttyAMA0-on-GPIO-14-15-disable-UART1-tty.patch",
 	"0102-expose-UART0-ttyAMA0-on-GPIO-14-15-disable-UART1-tty.patch",
 	"0103-expose-UART0-ttyAMA0-on-GPIO-14-15-disable-UART1-tty.patch",
+	// spi
+	"0201-enable-spidev.patch",
 }
 
 func copyFile(dest, src string) error {

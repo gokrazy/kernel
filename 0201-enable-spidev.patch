@@ -1,0 +1,61 @@
+diff --git a/arch/arm/boot/dts/bcm283x.dtsi b/arch/arm/boot/dts/bcm283x.dtsi
+index e1abe8c73..3d4baaeee 100644
+--- a/arch/arm/boot/dts/bcm283x.dtsi
++++ b/arch/arm/boot/dts/bcm283x.dtsi
+@@ -297,6 +297,14 @@ uart1_ctsrts_gpio42: uart1_ctsrts_gpio42 {
+ 				brcm,pins = <42 43>;
+ 				brcm,function = <BCM2835_FSEL_ALT5>;
+ 			};
++			spi0_pins: spi0_pins {
++				brcm,pins = <9 10 11>;
++				brcm,function = <BCM2835_FSEL_ALT0>;
++			};
++			spi0_cs_pins: spi0_cs_pins {
++				brcm,pins = <8 7>;
++				brcm,function = <BCM2835_FSEL_GPIO_OUT>;
++			};
+ 		};
+ 
+ 		uart0: serial@7e201000 {
+@@ -331,7 +339,28 @@ spi: spi@7e204000 {
+ 			clocks = <&clocks BCM2835_CLOCK_VPU>;
+ 			#address-cells = <1>;
+ 			#size-cells = <0>;
+-			status = "disabled";
++			status = "okay";
++			dmas = <&dma 6>, <&dma 7>;
++			dma-names = "tx", "rx";
++			cs-gpios = <&gpio 8 1>, <&gpio 7 1>;
++			pinctrl-names = "default";
++			pinctrl-0 = <&spi0_pins &spi0_cs_pins>;
++
++			spidev0: spidev@0 {
++				compatible = "brcm,bcm2835-spi";
++				spi-max-frequency = <125000000>;
++				reg = <0>;
++				#address-cells = <1>;
++				#size-cells = <0>;
++			};
++
++			spidev1: spidev@1 {
++				compatible = "brcm,bcm2835-spi";
++				spi-max-frequency = <125000000>;
++				reg = <1>;
++				#address-cells = <1>;
++				#size-cells = <0>;
++			};
+ 		};
+ 
+ 		i2c0: i2c@7e205000 {
+diff --git a/drivers/spi/spidev.c b/drivers/spi/spidev.c
+index 2ab6e782f..a426d5474 100644
+--- a/drivers/spi/spidev.c
++++ b/drivers/spi/spidev.c
+@@ -675,6 +675,7 @@ static const struct of_device_id spidev_dt_ids[] = {
+ 	{ .compatible = "lwn,bk4" },
+ 	{ .compatible = "dh,dhcom-board" },
+ 	{ .compatible = "menlo,m53cpld" },
++	{ .compatible = "brcm,bcm2835-spi" },
+ 	{},
+ };
+ MODULE_DEVICE_TABLE(of, spidev_dt_ids);
