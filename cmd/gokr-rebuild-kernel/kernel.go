@@ -100,7 +100,9 @@ func find(filename string) (string, error) {
 }
 
 func getContainerExecutable() (string, error) {
-	choices := []string{"docker", "podman"}
+	// Probe podman first, because the docker binary might actually
+	// be a thin podman wrapper with podman behavior.
+	choices := []string{"podman", "docker"}
 	for _, exe := range choices {
 		p, err := exec.LookPath(exe)
 		if err != nil {
