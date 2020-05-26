@@ -117,6 +117,12 @@ CONFIG_SPI_GPIO=y
 CONFIG_GPIOLIB=y
 CONFIG_GPIOLIB_IRQCHIP=y
 
+# For the Broadcom Wi-Fi on Raspberry Pi 3 and 4:
+CONFIG_RFKILL=y
+CONFIG_CFG80211=y
+CONFIG_BRCMFMAC=y
+CONFIG_NLMON=y
+
 # TODO: trim the settings below to the minimum set that works (taken from debian)
 ##
 ## file: arch/arm64/Kconfig
