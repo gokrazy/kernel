@@ -1102,6 +1102,10 @@ func main() {
 		log.Fatal(err)
 	}
 
+	if err := copyFile("/tmp/buildresult/bcm2710-rpi-cm3.dtb", "arch/arm64/boot/dts/broadcom/bcm2837-rpi-cm3-io3.dtb"); err != nil {
+		log.Fatal(err)
+	}
+
 	if err := copyFile("/tmp/buildresult/bcm2711-rpi-4-b.dtb", "arch/arm64/boot/dts/broadcom/bcm2711-rpi-4-b.dtb"); err != nil {
 		log.Fatal(err)
 	}
