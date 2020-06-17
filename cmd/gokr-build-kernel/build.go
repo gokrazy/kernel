@@ -65,6 +65,9 @@ CONFIG_XFRM_USER=y
 
 # For Apple USB Ethernet adapters:
 CONFIG_USB_NET_AX8817X=y
+# For Linksys USB3GIG Ethernet adapters,
+# tested USB VID/PID: 13b1:0041
+CONFIG_USB_RTL8152=y
 
 # For iptables:
 CONFIG_IPV6=y
