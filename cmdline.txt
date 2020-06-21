@@ -1,1 +1,1 @@
-root=/dev/mmcblk0p2 init=/gokrazy/init elevator=deadline rootwait panic=10 panic_on_oops=1
+root=/dev/mmcblk0p2 init=/gokrazy/init rootwait panic=10 panic_on_oops=1
