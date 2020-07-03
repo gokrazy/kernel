@@ -174,6 +174,15 @@ CONFIG_MACVLAN=y
 CONFIG_IKCONFIG=y
 CONFIG_IKCONFIG_PROC=y
 
+# For Raspberry Pi 4 hwmon:
+CONFIG_HWMON=y
+CONFIG_BCM2711_THERMAL=y
+CONFIG_SENSORS_RASPBERRYPI_HWMON=y
+
+# For Raspberry Pi 4 CPU frequency:
+CONFIG_CLK_RASPBERRYPI=y
+CONFIG_ARM_RASPBERRYPI_CPUFREQ=y
+
 # TODO: trim the settings below to the minimum set that works (taken from debian)
 ##
 ## file: arch/arm64/Kconfig
