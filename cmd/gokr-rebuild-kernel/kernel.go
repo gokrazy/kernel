@@ -5,10 +5,12 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
+	"net/http"
 	"os"
 	"os/exec"
 	"os/user"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"text/template"
 )
@@ -19,6 +21,7 @@ FROM debian:stretch
 RUN apt-get update && apt-get install -y crossbuild-essential-arm64 bc libssl-dev bison flex
 
 COPY gokr-build-kernel /usr/bin/gokr-build-kernel
+COPY {{ .KernelTar }} /var/cache/{{ .KernelTar }}
 {{- range $idx, $path := .Patches }}
 COPY {{ $path }} /usr/src/{{ $path }}
 {{- end }}
@@ -117,6 +120,28 @@ func getContainerExecutable() (string, error) {
 	return "", fmt.Errorf("none of %v found in $PATH", choices)
 }
 
+// TODO: remove downloadKernel from ../gokr-build-kernel/build.go if we end up
+// always downloading outside the container.
+func downloadKernel(destdir, latest string) error {
+	out, err := os.Create(filepath.Join(destdir, filepath.Base(latest)))
+	if err != nil {
+		return err
+	}
+	defer out.Close()
+	resp, err := http.Get(latest)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+	if got, want := resp.StatusCode, http.StatusOK; got != want {
+		return fmt.Errorf("unexpected HTTP status code for %s: got %d, want %d", latest, got, want)
+	}
+	if _, err := io.Copy(out, resp.Body); err != nil {
+		return err
+	}
+	return out.Close()
+}
+
 func main() {
 	executable, err := getContainerExecutable()
 	if err != nil {
@@ -179,6 +204,27 @@ func main() {
 		}
 	}
 
+	// Download the kernel sources outside of the container, as network inside
+	// the container is broken on GitHub actions.
+	buildGoPath, err := find("cmd/gokr-build-kernel/build.go")
+	if err != nil {
+		log.Fatal(err)
+	}
+	b, err := ioutil.ReadFile(buildGoPath)
+	if err != nil {
+		log.Fatal(err)
+	}
+	kernelURLRe := regexp.MustCompile(`var latest = "([^"]+)"`)
+	matches := kernelURLRe.FindStringSubmatch(string(b))
+	if matches == nil {
+		log.Fatalf("regexp %v resulted in no matches", kernelURLRe)
+	}
+
+	log.Printf("downloading %s", filepath.Base(matches[1]))
+	if err := downloadKernel(tmp, matches[1]); err != nil {
+		log.Fatal(err)
+	}
+
 	u, err := user.Current()
 	if err != nil {
 		log.Fatal(err)
@@ -193,11 +239,13 @@ func main() {
 		Gid       string
 		BuildPath string
 		Patches   []string
+		KernelTar string
 	}{
 		Uid:       u.Uid,
 		Gid:       u.Gid,
 		BuildPath: buildPath,
 		Patches:   patchFiles,
+		KernelTar: filepath.Base(matches[1]),
 	}); err != nil {
 		log.Fatal(err)
 	}

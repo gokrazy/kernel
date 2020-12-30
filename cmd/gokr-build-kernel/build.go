@@ -1124,13 +1124,20 @@ func copyFile(dest, src string) error {
 }
 
 func main() {
-	log.Printf("downloading kernel source: %s", latest)
-	if err := downloadKernel(); err != nil {
-		log.Fatal(err)
+	kernelSource := filepath.Base(latest)
+	cached := filepath.Join("/var/cache", kernelSource)
+	if _, err := os.Stat(cached); err == nil {
+		log.Printf("using cached kernel source")
+		kernelSource = cached
+	} else {
+		log.Printf("downloading kernel source: %s", latest)
+		if err := downloadKernel(); err != nil {
+			log.Fatal(err)
+		}
 	}
 
 	log.Printf("unpacking kernel source")
-	if err := exec.Command("tar", "xf", filepath.Base(latest)).Run(); err != nil {
+	if err := exec.Command("tar", "xf", kernelSource).Run(); err != nil {
 		log.Fatalf("untar: %v", err)
 	}
 
