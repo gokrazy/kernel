@@ -25,6 +25,8 @@ jobs:
       run: |
         [ "$(gofmt -l $(find . -name '*.go') 2>&1)" = "" ]
 
+    # TODO: once https://github.com/actions/runner/issues/662 is fixed, we can
+    # remove the gokr-has-label guards and terminate a CI run instead.
     - name: Test Boot
       env:
         GITHUB_REPOSITORY: ${{ secrets.GITHUB_REPOSITORY }}
@@ -36,7 +38,7 @@ jobs:
       if: ${{ env.GH_USER != 0 }}
       run: |
         GOPROXY=direct go get -u github.com/gokrazy/autoupdate/cmd/... github.com/gokrazy/tools/cmd/gokr-packer
-        gokr-boot -require_label=please-boot -set_label=please-merge -bootery_url=$BOOTERY_URL
+        if gokr-has-label please-boot; then gokr-boot -require_label=please-boot -set_label=please-merge -bootery_url=$BOOTERY_URL; fi
 
     - name: Amend Pull Request
       env:
@@ -48,9 +50,7 @@ jobs:
         BOOTERY_URL: ${{ secrets.BOOTERY_URL }}
       if: ${{ env.GH_USER != 0 }}
       run: |
-        go install ./cmd/gokr-rebuild-kernel
-        gokr-rebuild-kernel
-        GOPROXY=direct go get -u github.com/gokrazy/autoupdate/cmd/gokr-amend && gokr-amend -set_label=please-boot *.dtb vmlinuz
+        if ! gokr-has-label please-merge && ! gokr-has-label please-boot; then go install ./cmd/gokr-rebuild-kernel && gokr-rebuild-kernel && GOPROXY=direct go get -u github.com/gokrazy/autoupdate/cmd/gokr-amend && gokr-amend -set_label=please-boot *.dtb vmlinuz; fi
 
     - name: Merge if boot successful
       env:
@@ -61,5 +61,5 @@ jobs:
         TRAVIS_PULL_REQUEST_BRANCH: ${{ github.event.pull_request.head.ref }}
         BOOTERY_URL: ${{ secrets.BOOTERY_URL }}
       run: |
-        { set +e; gokr-merge -require_label=please-merge; ret=$?; [ $ret -eq 2 ] || exit $ret; }
+        if gokr-has-label please-merge; then set +e; gokr-merge -require_label=please-merge; ret=$?; [ $ret -eq 2 ] || exit $ret; fi
 
