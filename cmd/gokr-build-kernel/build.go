@@ -1123,17 +1123,24 @@ func copyFile(dest, src string) error {
 	return out.Close()
 }
 
-func main() {
+func downloadKernelOrCache(latest string) (string, error) {
 	kernelSource := filepath.Base(latest)
 	cached := filepath.Join("/var/cache", kernelSource)
 	if _, err := os.Stat(cached); err == nil {
 		log.Printf("using cached kernel source")
-		kernelSource = cached
-	} else {
-		log.Printf("downloading kernel source: %s", latest)
-		if err := downloadKernel(); err != nil {
-			log.Fatal(err)
-		}
+		return cached, nil
+	}
+	log.Printf("downloading kernel source: %s", latest)
+	if err := downloadKernel(); err != nil {
+		return "", err
+	}
+	return kernelSource, nil
+}
+
+func main() {
+	kernelSource, err := downloadKernelOrCache(latest)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	log.Printf("unpacking kernel source")
