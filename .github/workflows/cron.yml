@@ -30,10 +30,11 @@ jobs:
       run: |
         GOPROXY=direct go get -u github.com/gokrazy/autoupdate/cmd/gokr-pull-kernel
 
-    - name: Update EEPROM reference if newer EEPROM is available
+    - name: Update kernel reference if newer kernel is available
       env:
         GITHUB_REPOSITORY: ${{ secrets.GITHUB_REPOSITORY }}
         GH_USER: ${{ secrets.GH_USER }}
         GH_AUTH_TOKEN: ${{ secrets.GH_AUTH_TOKEN }}
+      if: ${{ env.GH_USER != 0 }}
       run: |
         gokr-pull-kernel
