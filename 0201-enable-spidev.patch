@@ -47,14 +47,14 @@ index e1abe8c73..3d4baaeee 100644
  		};
  
  		i2c0: i2c@7e205000 {
-diff --git a/drivers/spi/spidev.c b/drivers/spi/spidev.c
-index 2ab6e782f..a426d5474 100644
---- a/drivers/spi/spidev.c
-+++ b/drivers/spi/spidev.c
-@@ -675,6 +675,7 @@ static const struct of_device_id spidev_dt_ids[] = {
- 	{ .compatible = "lwn,bk4" },
+diff --git i/drivers/spi/spidev.c w/drivers/spi/spidev.c
+index 8cb4d92..069b16a 100644
+--- i/drivers/spi/spidev.c
++++ w/drivers/spi/spidev.c
+@@ -683,6 +683,7 @@ static const struct of_device_id spidev_dt_ids[] = {
  	{ .compatible = "dh,dhcom-board" },
  	{ .compatible = "menlo,m53cpld" },
+ 	{ .compatible = "cisco,spi-petra" },
 +	{ .compatible = "brcm,bcm2835-spi" },
  	{},
  };
