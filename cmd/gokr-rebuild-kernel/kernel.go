@@ -127,10 +127,10 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	execName := filepath.Base(executable)
 	if *overwriteContainerExecutable != "" {
-		execName = *overwriteContainerExecutable
+		executable = *overwriteContainerExecutable
 	}
+	execName := filepath.Base(executable)
 	// We explicitly use /tmp, because Docker only allows volume mounts under
 	// certain paths on certain platforms, see
 	// e.g. https://docs.docker.com/docker-for-mac/osxfs/#namespaces for macOS.
