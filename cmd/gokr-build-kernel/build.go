@@ -1144,7 +1144,10 @@ func main() {
 	}
 
 	log.Printf("unpacking kernel source")
-	if err := exec.Command("tar", "xf", kernelSource).Run(); err != nil {
+	untar := exec.Command("tar", "xf", kernelSource)
+	untar.Stdout = os.Stdout
+	untar.Stderr = os.Stderr
+	if err := untar.Run(); err != nil {
 		log.Fatalf("untar: %v", err)
 	}
 
