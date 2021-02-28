@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -118,11 +119,18 @@ func getContainerExecutable() (string, error) {
 }
 
 func main() {
+	var overwriteContainerExecutable = flag.String("overwrite_container_executable",
+		"",
+		"E.g. docker or podman to overwrite the automatically detected container executable")
+	flag.Parse()
 	executable, err := getContainerExecutable()
 	if err != nil {
 		log.Fatal(err)
 	}
 	execName := filepath.Base(executable)
+	if *overwriteContainerExecutable != "" {
+		execName = *overwriteContainerExecutable
+	}
 	// We explicitly use /tmp, because Docker only allows volume mounts under
 	// certain paths on certain platforms, see
 	// e.g. https://docs.docker.com/docker-for-mac/osxfs/#namespaces for macOS.

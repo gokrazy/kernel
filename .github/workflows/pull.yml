@@ -50,7 +50,7 @@ jobs:
         BOOTERY_URL: ${{ secrets.BOOTERY_URL }}
       if: ${{ env.GH_USER != 0 }}
       run: |
-        if ! gokr-has-label please-merge && ! gokr-has-label please-boot; then go install ./cmd/gokr-rebuild-kernel && gokr-rebuild-kernel && GOPROXY=direct go get -u github.com/gokrazy/autoupdate/cmd/gokr-amend && gokr-amend -set_label=please-boot *.dtb vmlinuz; fi
+        if ! gokr-has-label please-merge && ! gokr-has-label please-boot; then go install ./cmd/gokr-rebuild-kernel && gokr-rebuild-kernel -overwrite_container_executable=docker && GOPROXY=direct go get -u github.com/gokrazy/autoupdate/cmd/gokr-amend && gokr-amend -set_label=please-boot *.dtb vmlinuz; fi
 
     - name: Merge if boot successful
       env:
