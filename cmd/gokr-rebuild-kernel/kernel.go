@@ -48,6 +48,8 @@ var patchFiles = []string{
 	"0103-expose-UART0-ttyAMA0-on-GPIO-14-15-disable-UART1-tty.patch",
 	// spi
 	"0201-enable-spidev.patch",
+	// logo
+	"0001-gokrazy-logo.patch",
 }
 
 func copyFile(dest, src string) error {
