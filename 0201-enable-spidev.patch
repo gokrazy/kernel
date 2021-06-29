@@ -51,10 +51,10 @@ diff --git i/drivers/spi/spidev.c w/drivers/spi/spidev.c
 index 8cb4d92..069b16a 100644
 --- i/drivers/spi/spidev.c
 +++ w/drivers/spi/spidev.c
-@@ -683,6 +683,7 @@ static const struct of_device_id spidev_dt_ids[] = {
- 	{ .compatible = "dh,dhcom-board" },
+@@ -684,6 +684,7 @@
  	{ .compatible = "menlo,m53cpld" },
  	{ .compatible = "cisco,spi-petra" },
+ 	{ .compatible = "micron,spi-authenta" },
 +	{ .compatible = "brcm,bcm2835-spi" },
  	{},
  };
