@@ -161,6 +161,9 @@ CONFIG_NFT_OBJREF=y
 CONFIG_NET_UDP_TUNNEL=y
 CONFIG_WIREGUARD=y
 
+# For tun devices, see https://www.kernel.org/doc/Documentation/networking/tuntap.txt
+CONFIG_TUN=y
+
 # For traffic shaping using tc:
 CONFIG_NET_SCH_TBF=y
 
