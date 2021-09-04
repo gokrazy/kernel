@@ -6,11 +6,11 @@
  		/* 8250 auxiliary UART instead of pl011 */
 -		stdout-path = "serial1:115200n8";
 +		stdout-path = "";
-+		bootargs = "earlyprintk console=tty1"; 
++		bootargs = "earlyprintk console=tty1";
  	};
  
- 	/* Will be filled by the bootloader */
-@@ -37,6 +38,14 @@
+ 	leds {
+@@ -26,6 +27,14 @@
  		};
  	};
  
@@ -25,22 +25,22 @@
  	wifi_pwrseq: wifi-pwrseq {
  		compatible = "mmc-pwrseq-simple";
  		reset-gpios = <&expgpio 1 GPIO_ACTIVE_LOW>;
-@@ -57,6 +66,14 @@
- 	};
+@@ -64,6 +73,14 @@
+ 	status = "okay";
  };
  
 +&gpio {
-+       uart0_pins: uart0_pins {
-+               brcm,pins = <14 15>;
-+               brcm,function = <BCM2835_FSEL_ALT0>;
-+               brcm,pulls = <0 2>;
-+       };
++	uart0_pins: uart0_pins {
++		brcm,pins = <14 15>;
++		brcm,function = <BCM2835_FSEL_ALT0>;
++		brcm,pulls = <0 2>;
++	};
 +};
 +
- &firmware {
- 	expgpio: gpio {
- 		compatible = "raspberrypi,firmware-gpio";
-@@ -117,25 +134,16 @@
+ &expgpio {
+ 	gpio-line-names = "BT_ON",
+ 			  "WL_ON",
+@@ -231,25 +248,16 @@
  	};
  };
  
@@ -69,4 +69,4 @@
 +	status = "disabled";
  };
  
- &vchiq {
+ &vc4 {
