@@ -188,6 +188,9 @@ CONFIG_SENSORS_RASPBERRYPI_HWMON=y
 CONFIG_CLK_RASPBERRYPI=y
 CONFIG_ARM_RASPBERRYPI_CPUFREQ=y
 
+# This reduces the boot-to-fbstatus time from 35s to 13s!
+CONFIG_SQUASHFS_DECOMP_MULTI_PERCPU=y
+
 # TODO: trim the settings below to the minimum set that works (taken from debian)
 ##
 ## file: arch/arm64/Kconfig
