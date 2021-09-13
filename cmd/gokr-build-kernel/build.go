@@ -14,7 +14,7 @@ import (
 )
 
 // see https://www.kernel.org/releases.json
-var latest = "https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.13.13.tar.xz"
+var latest = "https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.14.3.tar.xz"
 
 const configAddendum = `
 CONFIG_ARCH_BCM2835=y 
@@ -778,6 +778,8 @@ CONFIG_QCOM_Q6V5_PIL=y
 ##
 CONFIG_RESET_CONTROLLER=y
 CONFIG_RESET_MESON=y
+# No longer in the arm64 defconfig due to commit 8ae030c34dce4f5764e945b325e8dc4d2adef044:
+CONFIG_RESET_RASPBERRYPI=y
 
 ##
 ## file: drivers/reset/hisilicon/Kconfig
