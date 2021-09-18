@@ -1,0 +1,40 @@
+From 3289c0b7839f553b2b997fee7909975259c49217 Mon Sep 17 00:00:00 2001
+From: Michael Stapelberg <michael@stapelberg.de>
+Date: Sat, 18 Sep 2021 22:08:09 +0200
+Subject: [PATCH 1/2] Revert "drm/vc4: hdmi: Make sure the controller is
+ powered in detect"
+
+This reverts commit 9984d6664ce9dcbbc713962539eaf7636ea246c2.
+---
+ drivers/gpu/drm/vc4/vc4_hdmi.c | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
+index c2876731ee2d..a99def52d410 100644
+--- a/drivers/gpu/drm/vc4/vc4_hdmi.c
++++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
+@@ -166,8 +166,6 @@ vc4_hdmi_connector_detect(struct drm_connector *connector, bool force)
+ 	struct vc4_hdmi *vc4_hdmi = connector_to_vc4_hdmi(connector);
+ 	bool connected = false;
+ 
+-	WARN_ON(pm_runtime_resume_and_get(&vc4_hdmi->pdev->dev));
+-
+ 	if (vc4_hdmi->hpd_gpio &&
+ 	    gpiod_get_value_cansleep(vc4_hdmi->hpd_gpio)) {
+ 		connected = true;
+@@ -188,12 +186,10 @@ vc4_hdmi_connector_detect(struct drm_connector *connector, bool force)
+ 			}
+ 		}
+ 
+-		pm_runtime_put(&vc4_hdmi->pdev->dev);
+ 		return connector_status_connected;
+ 	}
+ 
+ 	cec_phys_addr_invalidate(vc4_hdmi->cec_adap);
+-	pm_runtime_put(&vc4_hdmi->pdev->dev);
+ 	return connector_status_disconnected;
+ }
+ 
+-- 
+2.33.0
+
