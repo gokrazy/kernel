@@ -50,9 +50,6 @@ var patchFiles = []string{
 	"0201-enable-spidev.patch",
 	// logo
 	"0001-gokrazy-logo.patch",
-	// https://lists.freedesktop.org/archives/dri-devel/2021-September/324008.html
-	"0001-Revert-drm-vc4-hdmi-Make-sure-the-controller-is-powe.patch",
-	"0002-Revert-drm-vc4-hdmi-Move-the-HSM-clock-enable-to-run.patch",
 }
 
 func copyFile(dest, src string) error {
