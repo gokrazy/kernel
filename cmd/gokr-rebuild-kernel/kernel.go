@@ -172,6 +172,10 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	dtbZero2WPath, err := find("bcm2710-rpi-zero-2.dtb")
+	if err != nil {
+		log.Fatal(err)
+	}
 	dtbCM3Path, err := find("bcm2710-rpi-cm3.dtb")
 	if err != nil {
 		log.Fatal(err)
@@ -259,6 +263,11 @@ func main() {
 	}
 
 	if err := copyFile(dtbPath, filepath.Join(tmp, "bcm2710-rpi-3-b.dtb")); err != nil {
+		log.Fatal(err)
+	}
+
+	// Until the Raspberry Pi Zero 2 W DTB is built by the kernel, use bcm2710-rpi-3-b.dtb:
+	if err := copyFile(dtbZero2WPath, filepath.Join(tmp, "bcm2710-rpi-3-b.dtb")); err != nil {
 		log.Fatal(err)
 	}
 
