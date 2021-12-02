@@ -14,7 +14,7 @@ import (
 )
 
 // see https://www.kernel.org/releases.json
-var latest = "https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.15.5.tar.xz"
+var latest = "https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.15.6.tar.xz"
 
 const configAddendum = `
 CONFIG_ARCH_BCM2835=y 
