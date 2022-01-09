@@ -50,6 +50,8 @@ var patchFiles = []string{
 	"0201-enable-spidev.patch",
 	// logo
 	"0001-gokrazy-logo.patch",
+	// fix gpio: https://lore.kernel.org/all/95851343-2887-1e04-9598-e8c8ae74a99a@i2se.com/
+	"0001-Revert-pinctrl-bcm2835-Change-init-order-for-gpio-ho.patch",
 }
 
 func copyFile(dest, src string) error {
