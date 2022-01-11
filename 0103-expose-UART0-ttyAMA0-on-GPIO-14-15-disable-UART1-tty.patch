@@ -1,46 +1,25 @@
---- ./arch/arm/boot/dts/bcm2711-rpi-4-b.dts.O	2020-04-04 13:55:20.803705272 +0200
-+++ ./arch/arm/boot/dts/bcm2711-rpi-4-b.dts	2020-04-04 14:00:57.649047011 +0200
-@@ -10,7 +10,8 @@
+--- ./arch/arm/boot/dts/bcm2711-rpi-4-b.dts.orig	2022-01-11 08:59:55.072101246 +0100
++++ ./arch/arm/boot/dts/bcm2711-rpi-4-b.dts	2022-01-11 19:57:46.772347211 +0100
+@@ -10,8 +10,16 @@
+ 	model = "Raspberry Pi 4 Model B";
  
  	chosen {
- 		/* 8250 auxiliary UART instead of pl011 */
+-		/* 8250 auxiliary UART instead of pl011 */
 -		stdout-path = "serial1:115200n8";
 +		stdout-path = "";
 +		bootargs = "earlyprintk console=tty1";
- 	};
- 
- 	leds {
-@@ -26,6 +27,14 @@
- 		};
- 	};
- 
++	};
++
 +	aliases {
 +		/* required for the firmware as per
 +		 * https://github.com/raspberrypi/firmware/issues/752#issuecomment-283331328
 +		 * */
 +		uart0 = &uart0;
 +		uart1 = &uart1;
-+	};
-+
- 	wifi_pwrseq: wifi-pwrseq {
- 		compatible = "mmc-pwrseq-simple";
- 		reset-gpios = <&expgpio 1 GPIO_ACTIVE_LOW>;
-@@ -64,6 +73,14 @@
- 	status = "okay";
- };
+ 	};
  
-+&gpio {
-+	uart0_pins: uart0_pins {
-+		brcm,pins = <14 15>;
-+		brcm,function = <BCM2835_FSEL_ALT0>;
-+		brcm,pulls = <0 2>;
-+	};
-+};
-+
- &expgpio {
- 	gpio-line-names = "BT_ON",
- 			  "WL_ON",
-@@ -231,25 +248,16 @@
+ 	leds {
+@@ -215,18 +223,16 @@
  	};
  };
  
@@ -50,14 +29,8 @@
  	pinctrl-names = "default";
 -	pinctrl-0 = <&uart0_ctsrts_gpio30 &uart0_gpio32>;
 -	uart-has-rtscts;
-+	pinctrl-0 = <&uart0_pins>;
- 	status = "okay";
--
--	bluetooth {
--		compatible = "brcm,bcm43438-bt";
--		max-speed = <2000000>;
--		shutdown-gpios = <&expgpio 0 GPIO_ACTIVE_HIGH>;
--	};
++	pinctrl-0 = <&uart0_gpio14>;
++	status = "okay";
  };
  
 -/* uart1 is mapped to the pin header */
