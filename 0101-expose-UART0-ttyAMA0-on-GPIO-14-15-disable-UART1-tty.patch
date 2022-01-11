@@ -1,47 +1,26 @@
---- ./arch/arm/boot/dts/bcm2837-rpi-3-b.dts.O	2018-05-15 20:19:04.435005512 +0200
-+++ ./arch/arm/boot/dts/bcm2837-rpi-3-b.dts	2018-05-15 20:20:41.213552302 +0200
-@@ -10,8 +10,8 @@
+--- ./arch/arm/boot/dts/bcm2837-rpi-3-b.dts.orig	2022-01-09 23:55:34.000000000 +0100
++++ ./arch/arm/boot/dts/bcm2837-rpi-3-b.dts	2022-01-11 20:04:00.982345515 +0100
+@@ -11,8 +11,16 @@
  	model = "Raspberry Pi 3 Model B";
  
  	chosen {
 -		/* 8250 auxiliary UART instead of pl011 */
 -		stdout-path = "serial1:115200n8";
 +		stdout-path = "";
-+		bootargs = "earlyprintk console=tty1"; 
- 	};
- 
- 	memory {
-@@ -24,12 +24,28 @@
- 		};
- 	};
- 
++		bootargs = "earlyprintk console=tty1";
++	};
++
 +	aliases {
 +		/* required for the firmware as per
 +		 * https://github.com/raspberrypi/firmware/issues/752#issuecomment-283331328
 +		 * */
 +		uart0 = &uart0;
 +		uart1 = &uart1;
-+	};
-+
- 	wifi_pwrseq: wifi-pwrseq {
- 		compatible = "mmc-pwrseq-simple";
- 		reset-gpios = <&expgpio 1 GPIO_ACTIVE_LOW>;
  	};
- };
  
-+&gpio {
-+	uart0_pins: uart0_pins {
-+		brcm,pins = <14 15>;
-+		brcm,function = <BCM2835_FSEL_ALT0>;
-+		brcm,pulls = <0 2>;
-+	};
-+};
-+
- &firmware {
- 	expgpio: gpio {
- 		compatible = "raspberrypi,firmware-gpio";
-@@ -57,24 +73,16 @@
- 	hpd-gpios = <&expgpio 4 GPIO_ACTIVE_LOW>;
+ 	memory@0 {
+@@ -130,17 +138,16 @@
+ 	status = "okay";
  };
  
 -/* uart0 communicates with the BT module */
@@ -49,14 +28,8 @@
  &uart0 {
  	pinctrl-names = "default";
 -	pinctrl-0 = <&uart0_gpio32 &gpclk2_gpio43>;
-+	pinctrl-0 = <&uart0_pins>;
- 	status = "okay";
--
--	bluetooth {
--		compatible = "brcm,bcm43438-bt";
--		max-speed = <2000000>;
--		shutdown-gpios = <&expgpio 0 GPIO_ACTIVE_HIGH>;
--	};
++	pinctrl-0 = <&uart0_gpio14>;
++	status = "okay";
  };
  
 -/* uart1 is mapped to the pin header */
@@ -68,4 +41,4 @@
 +	status = "disabled";
  };
  
- /* SDHCI is used to control the SDIO for wireless */
+ /* SDHOST is used to drive the SD card */
