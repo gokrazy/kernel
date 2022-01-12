@@ -1,0 +1,12 @@
+--- ./arch/arm/boot/dts/bcm283x-rpi-wifi-bt.dtsi.orig	2022-01-12 22:45:45.523880288 +0100
++++ ./arch/arm/boot/dts/bcm283x-rpi-wifi-bt.dtsi	2022-01-12 22:45:50.223968834 +0100
+@@ -26,9 +26,4 @@
+ /* uart0 communicates with the BT module */
+ &uart0 {
+ 	status = "okay";
+-
+-	bt: bluetooth {
+-		compatible = "brcm,bcm43438-bt";
+-		max-speed = <2000000>;
+-	};
+ };

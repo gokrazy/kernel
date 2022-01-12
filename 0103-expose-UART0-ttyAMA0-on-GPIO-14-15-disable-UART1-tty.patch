@@ -1,5 +1,5 @@
---- ./arch/arm/boot/dts/bcm2711-rpi-4-b.dts.orig	2022-01-11 08:59:55.072101246 +0100
-+++ ./arch/arm/boot/dts/bcm2711-rpi-4-b.dts	2022-01-11 19:57:46.772347211 +0100
+--- ./arch/arm/boot/dts/bcm2711-rpi-4-b.dts.orig	2022-01-12 22:10:16.147145347 +0100
++++ ./arch/arm/boot/dts/bcm2711-rpi-4-b.dts	2022-01-12 22:48:00.869763575 +0100
 @@ -10,8 +10,16 @@
  	model = "Raspberry Pi 4 Model B";
  
@@ -19,7 +19,18 @@
  	};
  
  	leds {
-@@ -215,18 +223,16 @@
+@@ -52,10 +60,6 @@
+ 	};
+ };
+ 
+-&bt {
+-	shutdown-gpios = <&expgpio 0 GPIO_ACTIVE_HIGH>;
+-};
+-
+ &ddc0 {
+ 	status = "okay";
+ };
+@@ -215,18 +219,16 @@
  	};
  };
  

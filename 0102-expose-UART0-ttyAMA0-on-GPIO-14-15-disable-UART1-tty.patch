@@ -1,5 +1,5 @@
---- ./arch/arm/boot/dts/bcm2837-rpi-3-b-plus.dts.orig	2022-01-11 08:56:41.435321858 +0100
-+++ ./arch/arm/boot/dts/bcm2837-rpi-3-b-plus.dts	2022-01-11 20:05:01.466755142 +0100
+--- ./arch/arm/boot/dts/bcm2837-rpi-3-b-plus.dts.orig	2022-01-12 22:31:06.330658344 +0100
++++ ./arch/arm/boot/dts/bcm2837-rpi-3-b-plus.dts	2022-01-12 22:48:54.974116286 +0100
 @@ -11,8 +11,16 @@
  	model = "Raspberry Pi 3 Model B+";
  
@@ -19,7 +19,18 @@
  	};
  
  	memory@0 {
-@@ -145,17 +153,16 @@
+@@ -34,10 +42,6 @@
+ 	};
+ };
+ 
+-&bt {
+-	shutdown-gpios = <&expgpio 0 GPIO_ACTIVE_HIGH>;
+-};
+-
+ &firmware {
+ 	expgpio: gpio {
+ 		compatible = "raspberrypi,firmware-gpio";
+@@ -145,17 +149,16 @@
  	bus-width = <4>;
  };
  

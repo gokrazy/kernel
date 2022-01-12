@@ -1,0 +1,13 @@
+--- ./arch/arm/boot/dts/bcm2711-rpi-cm4.dtsi.orig	2022-01-12 22:51:51.984118167 +0100
++++ ./arch/arm/boot/dts/bcm2711-rpi-cm4.dtsi	2022-01-12 22:51:53.230808324 +0100
+@@ -37,10 +37,6 @@
+ 	};
+ };
+ 
+-&bt {
+-	shutdown-gpios = <&expgpio 0 GPIO_ACTIVE_HIGH>;
+-};
+-
+ /* EMMC2 is used to drive the eMMC */
+ &emmc2 {
+ 	bus-width = <8>;
