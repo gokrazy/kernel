@@ -1,17 +1,22 @@
 package main
 
 import (
+	"context"
+	"encoding/hex"
 	"flag"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"log"
+	"math/rand"
 	"os"
 	"os/exec"
+	"os/signal"
 	"os/user"
 	"path/filepath"
 	"strings"
+	"syscall"
 	"text/template"
+	"time"
 )
 
 const dockerFileContents = `
@@ -122,14 +127,28 @@ func getContainerExecutable() (string, error) {
 	return "", fmt.Errorf("none of %v found in $PATH", choices)
 }
 
+var fatalErr error
+
+func fatal(e error) {
+	log.Println(e)
+	fatalErr = e
+}
+
 func main() {
+	defer func() {
+		if fatalErr != nil {
+			os.Exit(1)
+		}
+	}()
+
 	var overwriteContainerExecutable = flag.String("overwrite_container_executable",
 		"",
 		"E.g. docker or podman to overwrite the automatically detected container executable")
 	flag.Parse()
 	executable, err := getContainerExecutable()
 	if err != nil {
-		log.Fatal(err)
+		fatal(err)
+		return
 	}
 	if *overwriteContainerExecutable != "" {
 		executable = *overwriteContainerExecutable
@@ -138,9 +157,10 @@ func main() {
 	// We explicitly use /tmp, because Docker only allows volume mounts under
 	// certain paths on certain platforms, see
 	// e.g. https://docs.docker.com/docker-for-mac/osxfs/#namespaces for macOS.
-	tmp, err := ioutil.TempDir("/tmp", "gokr-rebuild-kernel")
+	tmp, err := os.MkdirTemp("/tmp", "gokr-rebuild-kernel")
 	if err != nil {
-		log.Fatal(err)
+		fatal(err)
+		return
 	}
 	defer os.RemoveAll(tmp)
 
@@ -148,7 +168,7 @@ func main() {
 	cmd.Env = append(os.Environ(), "GOOS=linux", "GOBIN="+tmp)
 	cmd.Stderr = os.Stderr
 	if err := cmd.Run(); err != nil {
-		log.Fatalf("%v: %v", cmd.Args, err)
+		fatal(fmt.Errorf("%v: %v", cmd.Args, err))
 	}
 
 	buildPath := filepath.Join(tmp, "gokr-build-kernel")
@@ -157,51 +177,61 @@ func main() {
 	for _, filename := range patchFiles {
 		path, err := find(filename)
 		if err != nil {
-			log.Fatal(err)
+			fatal(err)
+			return
 		}
 		patchPaths = append(patchPaths, path)
 	}
 
 	kernelPath, err := find("vmlinuz")
 	if err != nil {
-		log.Fatal(err)
+		fatal(err)
+		return
 	}
 	dtbPath, err := find("bcm2710-rpi-3-b.dtb")
 	if err != nil {
-		log.Fatal(err)
+		fatal(err)
+		return
 	}
 	dtbPlusPath, err := find("bcm2710-rpi-3-b-plus.dtb")
 	if err != nil {
-		log.Fatal(err)
+		fatal(err)
+		return
 	}
 	dtbZero2WPath, err := find("bcm2710-rpi-zero-2.dtb")
 	if err != nil {
-		log.Fatal(err)
+		fatal(err)
+		return
 	}
 	dtbCM3Path, err := find("bcm2710-rpi-cm3.dtb")
 	if err != nil {
-		log.Fatal(err)
+		fatal(err)
+		return
 	}
 	dtb4Path, err := find("bcm2711-rpi-4-b.dtb")
 	if err != nil {
-		log.Fatal(err)
+		fatal(err)
+		return
 	}
 
 	// Copy all files into the temporary directory so that docker
 	// includes them in the build context.
 	for _, path := range patchPaths {
 		if err := copyFile(filepath.Join(tmp, filepath.Base(path)), path); err != nil {
-			log.Fatal(err)
+			fatal(err)
+			return
 		}
 	}
 
 	u, err := user.Current()
 	if err != nil {
-		log.Fatal(err)
+		fatal(err)
+		return
 	}
 	dockerFile, err := os.Create(filepath.Join(tmp, "Dockerfile"))
 	if err != nil {
-		log.Fatal(err)
+		fatal(err)
+		return
 	}
 
 	if err := dockerFileTmpl.Execute(dockerFile, struct {
@@ -215,11 +245,13 @@ func main() {
 		BuildPath: buildPath,
 		Patches:   patchFiles,
 	}); err != nil {
-		log.Fatal(err)
+		fatal(err)
+		return
 	}
 
 	if err := dockerFile.Close(); err != nil {
-		log.Fatal(err)
+		fatal(err)
+		return
 	}
 
 	log.Printf("building %s container for kernel compilation", execName)
@@ -233,56 +265,88 @@ func main() {
 	dockerBuild.Stdout = os.Stdout
 	dockerBuild.Stderr = os.Stderr
 	if err := dockerBuild.Run(); err != nil {
-		log.Fatalf("%s build: %v (cmd: %v)", execName, err, dockerBuild.Args)
+		fatal(fmt.Errorf("%s build: %v (cmd: %v)", execName, err, dockerBuild.Args))
+		return
 	}
 
 	log.Printf("compiling kernel")
 
+	ctx, cancel := context.WithCancel(context.Background())
+	signalChan := make(chan os.Signal, 1)
+	go func() {
+		<-signalChan
+		cancel()
+		log.Println("Stopping ...")
+	}()
+	signal.Notify(signalChan, syscall.SIGINT, syscall.SIGTERM)
+
+	rand.Seed(time.Now().UnixNano())
+	randBytes := make([]byte, 4)
+	rand.Read(randBytes)
+	containerId := "compilekernel-" + hex.EncodeToString(randBytes)
+
 	var dockerRun *exec.Cmd
 	if execName == "podman" {
-		dockerRun = exec.Command(executable,
+		dockerRun = exec.CommandContext(ctx, executable,
 			"run",
+			"--rm",
 			"--userns=keep-id",
 			"--rm",
+			"--name", containerId,
 			"--volume", tmp+":/tmp/buildresult:Z",
 			"gokr-rebuild-kernel")
 	} else {
-		dockerRun = exec.Command(executable,
+		dockerRun = exec.CommandContext(ctx, executable,
 			"run",
 			"--rm",
+			"--name", containerId,
 			"--volume", tmp+":/tmp/buildresult:Z",
 			"gokr-rebuild-kernel")
 	}
+	defer func() {
+		if !dockerRun.ProcessState.Success() {
+			exec.Command(
+				executable,
+				"stop", containerId,
+			).Run()
+		}
+	}()
 	dockerRun.Dir = tmp
 	dockerRun.Stdout = os.Stdout
 	dockerRun.Stderr = os.Stderr
 	if err := dockerRun.Run(); err != nil {
-		log.Fatalf("%s run: %v (cmd: %v)", execName, err, dockerRun.Args)
+		fatal(fmt.Errorf("%s run: %v (cmd: %v)", execName, err, dockerRun.Args))
+		return
 	}
 
 	if err := copyFile(kernelPath, filepath.Join(tmp, "vmlinuz")); err != nil {
-		log.Fatal(err)
+		fatal(err)
+		return
 	}
 
 	if err := copyFile(dtbPath, filepath.Join(tmp, "bcm2710-rpi-3-b.dtb")); err != nil {
-		log.Fatal(err)
+		fatal(err)
+		return
 	}
 
 	// Until the Raspberry Pi Zero 2 W DTB is built by the kernel, use bcm2710-rpi-3-b.dtb:
 	if err := copyFile(dtbZero2WPath, filepath.Join(tmp, "bcm2710-rpi-3-b.dtb")); err != nil {
-		log.Fatal(err)
+		fatal(err)
+		return
 	}
 
 	if err := copyFile(dtbPlusPath, filepath.Join(tmp, "bcm2710-rpi-3-b-plus.dtb")); err != nil {
-		log.Fatal(err)
+		fatal(err)
+		return
 	}
 
 	if err := copyFile(dtbCM3Path, filepath.Join(tmp, "bcm2710-rpi-cm3.dtb")); err != nil {
-		log.Fatal(err)
+		fatal(err)
+		return
 	}
 
 	if err := copyFile(dtb4Path, filepath.Join(tmp, "bcm2711-rpi-4-b.dtb")); err != nil {
-		log.Fatal(err)
+		fatal(err)
+		return
 	}
-
 }
