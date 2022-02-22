@@ -52,6 +52,8 @@ var patchFiles = []string{
 	"0201-enable-spidev.patch",
 	// logo
 	"0001-gokrazy-logo.patch",
+	// https://lore.kernel.org/lkml/CAK7LNATpRBm9jgDd2-2rOtAzHXprEQyUh0PoyicszEWJ97qM4w@mail.gmail.com/T/
+	"0001-mod2noconfig.patch",
 }
 
 func copyFile(dest, src string) error {
@@ -145,7 +147,7 @@ func main() {
 	defer os.RemoveAll(tmp)
 
 	cmd := exec.Command("go", "install", "github.com/gokrazy/kernel/cmd/gokr-build-kernel")
-	cmd.Env = append(os.Environ(), "GOOS=linux", "GOBIN="+tmp)
+	cmd.Env = append(os.Environ(), "GOOS=linux", "GOBIN="+tmp, "CGO_ENABLED=0")
 	cmd.Stderr = os.Stderr
 	if err := cmd.Run(); err != nil {
 		log.Fatalf("%v: %v", cmd.Args, err)
@@ -183,6 +185,10 @@ func main() {
 		log.Fatal(err)
 	}
 	dtb4Path, err := find("bcm2711-rpi-4-b.dtb")
+	if err != nil {
+		log.Fatal(err)
+	}
+	libPath, err := find("lib")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -285,4 +291,30 @@ func main() {
 		log.Fatal(err)
 	}
 
+	// remove symlinks that only work when source/build directory are present
+	for _, subdir := range []string{"build", "source"} {
+		matches, err := filepath.Glob(filepath.Join(tmp, "lib/modules", "*", subdir))
+		if err != nil {
+			log.Fatal(err)
+		}
+		for _, match := range matches {
+			if err := os.Remove(match); err != nil {
+				log.Fatal(err)
+			}
+		}
+	}
+
+	// replace kernel modules directory
+	rm := exec.Command("rm", "-rf", filepath.Join(libPath, "modules"))
+	rm.Stdout = os.Stdout
+	rm.Stderr = os.Stderr
+	if err := rm.Run(); err != nil {
+		log.Fatalf("%v: %v", rm.Args, err)
+	}
+	cp := exec.Command("cp", "-r", filepath.Join(tmp, "lib/modules"), libPath)
+	cp.Stdout = os.Stdout
+	cp.Stderr = os.Stderr
+	if err := cp.Run(); err != nil {
+		log.Fatalf("%v: %v", cp.Args, err)
+	}
 }

@@ -128,7 +128,7 @@ CONFIG_GPIOLIB_IRQCHIP=y
 # For the Broadcom Wi-Fi on Raspberry Pi 3 and 4:
 CONFIG_RFKILL=y
 CONFIG_CFG80211=y
-CONFIG_BRCMFMAC=y
+CONFIG_BRCMFMAC=m
 CONFIG_NLMON=y
 
 # For using github.com/vishvananda/netlink
@@ -1076,6 +1076,14 @@ func compile() error {
 		return fmt.Errorf("make defconfig: %v", err)
 	}
 
+	// Change answers from mod to no if possible
+	mod2noconfig := exec.Command("make", "ARCH=arm64", "mod2noconfig")
+	mod2noconfig.Stdout = os.Stdout
+	mod2noconfig.Stderr = os.Stderr
+	if err := mod2noconfig.Run(); err != nil {
+		return fmt.Errorf("make olddefconfig: %v", err)
+	}
+
 	f, err := os.OpenFile(".config", os.O_APPEND|os.O_WRONLY, 0644)
 	if err != nil {
 		return err
@@ -1095,14 +1103,23 @@ func compile() error {
 		return fmt.Errorf("make olddefconfig: %v", err)
 	}
 
-	make := exec.Command("make", "Image.gz", "dtbs", "-j"+strconv.Itoa(runtime.NumCPU()))
-	make.Env = append(os.Environ(),
+	env := append(os.Environ(),
 		"ARCH=arm64",
 		"CROSS_COMPILE=aarch64-linux-gnu-",
 		"KBUILD_BUILD_USER=gokrazy",
 		"KBUILD_BUILD_HOST=docker",
 		"KBUILD_BUILD_TIMESTAMP=Wed Mar  1 20:57:29 UTC 2017",
 	)
+	make := exec.Command("make", "Image.gz", "dtbs", "modules", "-j"+strconv.Itoa(runtime.NumCPU()))
+	make.Env = env
+	make.Stdout = os.Stdout
+	make.Stderr = os.Stderr
+	if err := make.Run(); err != nil {
+		return fmt.Errorf("make: %v", err)
+	}
+
+	make = exec.Command("make", "INSTALL_MOD_PATH=/tmp/buildresult", "modules_install", "-j"+strconv.Itoa(runtime.NumCPU()))
+	make.Env = env
 	make.Stdout = os.Stdout
 	make.Stderr = os.Stderr
 	if err := make.Run(); err != nil {
