@@ -28,7 +28,7 @@ jobs:
 
     - name: Get dependencies
       run: |
-        GOPROXY=direct go get -u github.com/gokrazy/autoupdate/cmd/gokr-pull-kernel
+        GOPROXY=direct go install github.com/gokrazy/autoupdate/cmd/gokr-pull-kernel@latest
 
     - name: Update kernel reference if newer kernel is available
       env:
