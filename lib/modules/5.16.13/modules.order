@@ -1,0 +1,2 @@
+kernel/drivers/net/wireless/broadcom/brcm80211/brcmutil/brcmutil.ko
+kernel/drivers/net/wireless/broadcom/brcm80211/brcmfmac/brcmfmac.ko
