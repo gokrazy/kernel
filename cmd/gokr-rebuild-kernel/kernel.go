@@ -48,6 +48,11 @@ var patchFiles = []string{
 	"0001-gokrazy-logo.patch",
 	// https://lore.kernel.org/lkml/CAK7LNATpRBm9jgDd2-2rOtAzHXprEQyUh0PoyicszEWJ97qM4w@mail.gmail.com/T/
 	"0001-mod2noconfig.patch",
+	// Raspberry Pi Zero 2 W dtb cherry-pick so that the WiFi driver works:
+	// https://lore.kernel.org/linux-arm-kernel/1643736467-17764-1-git-send-email-stefan.wahren@i2se.com/
+	"0301-zero2w.patch",
+	"0302-zero2w.patch",
+	"0303-zero2w.patch",
 }
 
 func copyFile(dest, src string) error {
@@ -268,8 +273,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// Until the Raspberry Pi Zero 2 W DTB is built by the kernel, use bcm2710-rpi-3-b.dtb:
-	if err := copyFile(dtbZero2WPath, filepath.Join(tmp, "bcm2710-rpi-3-b.dtb")); err != nil {
+	if err := copyFile(dtbZero2WPath, filepath.Join(tmp, "bcm2710-rpi-zero-2-w.dtb")); err != nil {
 		log.Fatal(err)
 	}
 

@@ -1,0 +1,38 @@
+From eae8273f9bddc5c5dd466fdc6ced852f08e8f36c Mon Sep 17 00:00:00 2001
+From: Stefan Wahren <stefan.wahren@i2se.com>
+Date: Tue, 1 Feb 2022 18:27:47 +0100
+Subject: [PATCH] arm64: dts: broadcom: Add reference to RPi Zero 2 W
+
+This adds a reference to the dts of the Raspberry Pi Zero 2 W,
+so we don't need to maintain the content in arm64.
+
+Signed-off-by: Stefan Wahren <stefan.wahren@i2se.com>
+Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
+---
+ arch/arm64/boot/dts/broadcom/Makefile                 | 3 ++-
+ arch/arm64/boot/dts/broadcom/bcm2837-rpi-zero-2-w.dts | 2 ++
+ 2 files changed, 4 insertions(+), 1 deletion(-)
+ create mode 100644 arch/arm64/boot/dts/broadcom/bcm2837-rpi-zero-2-w.dts
+
+diff --git a/arch/arm64/boot/dts/broadcom/Makefile b/arch/arm64/boot/dts/broadcom/Makefile
+index c6882032a42808..5082fcd1fea51f 100644
+--- a/arch/arm64/boot/dts/broadcom/Makefile
++++ b/arch/arm64/boot/dts/broadcom/Makefile
+@@ -5,7 +5,8 @@ dtb-$(CONFIG_ARCH_BCM2835) += bcm2711-rpi-400.dtb \
+ 			      bcm2837-rpi-3-a-plus.dtb \
+ 			      bcm2837-rpi-3-b.dtb \
+ 			      bcm2837-rpi-3-b-plus.dtb \
+-			      bcm2837-rpi-cm3-io3.dtb
++			      bcm2837-rpi-cm3-io3.dtb \
++			      bcm2837-rpi-zero-2-w.dtb
+ 
+ subdir-y	+= bcm4908
+ subdir-y	+= northstar2
+diff --git a/arch/arm64/boot/dts/broadcom/bcm2837-rpi-zero-2-w.dts b/arch/arm64/boot/dts/broadcom/bcm2837-rpi-zero-2-w.dts
+new file mode 100644
+index 00000000000000..307ae693e4a0ba
+--- /dev/null
++++ b/arch/arm64/boot/dts/broadcom/bcm2837-rpi-zero-2-w.dts
+@@ -0,0 +1,2 @@
++// SPDX-License-Identifier: GPL-2.0
++#include "arm/bcm2837-rpi-zero-2-w.dts"

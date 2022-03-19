@@ -1,0 +1,26 @@
+From e5eb80f0c076346d5e837dc09e3604f79a8c6814 Mon Sep 17 00:00:00 2001
+From: Stefan Wahren <stefan.wahren@i2se.com>
+Date: Tue, 1 Feb 2022 18:27:45 +0100
+Subject: [PATCH] dt-bindings: arm: bcm2835: Add Raspberry Pi Zero 2 W
+
+Add the Raspberry Pi Zero 2 W to DT schema.
+
+Signed-off-by: Stefan Wahren <stefan.wahren@i2se.com>
+Acked-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
+---
+ Documentation/devicetree/bindings/arm/bcm/bcm2835.yaml | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Documentation/devicetree/bindings/arm/bcm/bcm2835.yaml b/Documentation/devicetree/bindings/arm/bcm/bcm2835.yaml
+index 5dc48241efb3be..8051a75c2c79ac 100644
+--- a/Documentation/devicetree/bindings/arm/bcm/bcm2835.yaml
++++ b/Documentation/devicetree/bindings/arm/bcm/bcm2835.yaml
+@@ -51,6 +51,7 @@ properties:
+               - raspberrypi,3-model-b-plus
+               - raspberrypi,3-compute-module
+               - raspberrypi,3-compute-module-lite
++              - raspberrypi,model-zero-2-w
+           - const: brcm,bcm2837
+ 
+ additionalProperties: true
