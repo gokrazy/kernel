@@ -46,8 +46,6 @@ var patchFiles = []string{
 	"0201-enable-spidev.patch",
 	// logo
 	"0001-gokrazy-logo.patch",
-	// https://lore.kernel.org/lkml/CAK7LNATpRBm9jgDd2-2rOtAzHXprEQyUh0PoyicszEWJ97qM4w@mail.gmail.com/T/
-	"0001-mod2noconfig.patch",
 	// Raspberry Pi Zero 2 W dtb cherry-pick so that the WiFi driver works:
 	// https://lore.kernel.org/linux-arm-kernel/1643736467-17764-1-git-send-email-stefan.wahren@i2se.com/
 	"0301-zero2w.patch",
