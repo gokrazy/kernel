@@ -36,6 +36,7 @@ kernel/fs/nls/nls_cp437.ko
 kernel/fs/nls/nls_iso8859-1.ko
 kernel/fs/autofs/autofs4.ko
 kernel/fs/fuse/fuse.ko
+kernel/fs/overlayfs/overlay.ko
 kernel/fs/9p/9p.ko
 kernel/fs/pstore/pstore.ko
 kernel/fs/efivarfs/efivarfs.ko
@@ -702,6 +703,7 @@ kernel/drivers/net/mdio/mdio-mux-multiplexer.ko
 kernel/drivers/net/pcs/pcs_xpcs.ko
 kernel/drivers/net/pcs/pcs-lynx.ko
 kernel/drivers/net/tun.ko
+kernel/drivers/net/veth.ko
 kernel/drivers/net/virtio_net.ko
 kernel/drivers/net/nlmon.ko
 kernel/drivers/net/ethernet/3com/3c59x.ko
@@ -1168,7 +1170,11 @@ kernel/sound/soc/tegra/snd-soc-tegra-machine.ko
 kernel/sound/hda/snd-hda-core.ko
 kernel/net/core/selftests.ko
 kernel/net/core/failover.ko
+kernel/net/llc/llc.ko
+kernel/net/802/p8022.ko
+kernel/net/802/psnap.ko
 kernel/net/802/fddi.ko
+kernel/net/802/stp.ko
 kernel/net/sched/sch_tbf.ko
 kernel/net/netfilter/nfnetlink.ko
 kernel/net/netfilter/nfnetlink_queue.ko
@@ -1202,6 +1208,7 @@ kernel/net/netfilter/xt_nat.ko
 kernel/net/netfilter/xt_LOG.ko
 kernel/net/netfilter/xt_MASQUERADE.ko
 kernel/net/netfilter/xt_addrtype.ko
+kernel/net/netfilter/xt_comment.ko
 kernel/net/netfilter/xt_conntrack.ko
 kernel/net/ipv4/ip_tunnel.ko
 kernel/net/ipv4/udp_tunnel.ko
@@ -1231,6 +1238,7 @@ kernel/net/ipv6/netfilter/ip6t_REJECT.ko
 kernel/net/ipv6/sit.ko
 kernel/net/ipv6/ip6_udp_tunnel.ko
 kernel/net/packet/af_packet.ko
+kernel/net/bridge/bridge.ko
 kernel/net/sunrpc/sunrpc.ko
 kernel/net/sunrpc/auth_gss/auth_rpcgss.ko
 kernel/net/wireless/cfg80211.ko

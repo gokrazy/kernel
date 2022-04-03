@@ -201,6 +201,18 @@ CONFIG_ARM_RASPBERRYPI_CPUFREQ=y
 # This reduces the boot-to-fbstatus time from 35s to 13s!
 CONFIG_SQUASHFS_DECOMP_MULTI_PERCPU=y
 
+# For runc:
+CONFIG_BPF_SYSCALL=y
+CONFIG_CGROUP_FREEZER=y
+CONFIG_CGROUP_BPF=y
+CONFIG_SOCK_CGROUP_DATA=y
+CONFIG_NET_SOCK_MSG=y
+# For podman:
+CONFIG_OVERLAY_FS=y
+CONFIG_BRIDGE=y
+CONFIG_VETH=y
+CONFIG_NETFILTER_XT_MATCH_COMMENT=y
+
 # TODO: trim the settings below to the minimum set that works (taken from debian)
 ##
 ## file: arch/arm64/Kconfig
