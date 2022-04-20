@@ -212,6 +212,8 @@ CONFIG_OVERLAY_FS=y
 CONFIG_BRIDGE=y
 CONFIG_VETH=y
 CONFIG_NETFILTER_XT_MATCH_COMMENT=y
+CONFIG_NETFILTER_XT_MATCH_MULTIPORT=y
+CONFIG_NETFILTER_XT_MARK=y
 
 # TODO: trim the settings below to the minimum set that works (taken from debian)
 ##
