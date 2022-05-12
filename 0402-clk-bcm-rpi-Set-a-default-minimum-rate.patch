@@ -1,0 +1,76 @@
+From 542acfec4e313c001f9b82332f4fa2848ec7bf58 Mon Sep 17 00:00:00 2001
+From: Maxime Ripard <maxime@cerno.tech>
+Date: Fri, 25 Feb 2022 15:35:31 +0100
+Subject: [PATCH 2/3] clk: bcm: rpi: Set a default minimum rate
+
+The M2MC clock provides the state machine clock for both HDMI
+controllers.
+
+However, if no HDMI monitor is plugged in at boot, its clock rate will
+be left at 0 by the firmware and will make any register access end up in
+a CPU stall, even though the clock was enabled.
+
+We had some code in the HDMI controller to deal with this before, but it
+makes more sense to have it in the clock driver. Move it there.
+
+Signed-off-by: Maxime Ripard <maxime@cerno.tech>
+Link: https://lore.kernel.org/r/20220225143534.405820-10-maxime@cerno.tech
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+---
+ drivers/clk/bcm/clk-raspberrypi.c | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
+
+diff --git a/drivers/clk/bcm/clk-raspberrypi.c b/drivers/clk/bcm/clk-raspberrypi.c
+index f7185d421085..c879f2e9a4a7 100644
+--- a/drivers/clk/bcm/clk-raspberrypi.c
++++ b/drivers/clk/bcm/clk-raspberrypi.c
+@@ -76,6 +76,7 @@ struct raspberrypi_clk_data {
+ struct raspberrypi_clk_variant {
+ 	bool		export;
+ 	char		*clkdev;
++	unsigned long	min_rate;
+ };
+ 
+ static struct raspberrypi_clk_variant
+@@ -89,6 +90,18 @@ raspberrypi_clk_variants[RPI_FIRMWARE_NUM_CLK_ID] = {
+ 	},
+ 	[RPI_FIRMWARE_M2MC_CLK_ID] = {
+ 		.export = true,
++
++		/*
++		 * If we boot without any cable connected to any of the
++		 * HDMI connector, the firmware will skip the HSM
++		 * initialization and leave it with a rate of 0,
++		 * resulting in a bus lockup when we're accessing the
++		 * registers even if it's enabled.
++		 *
++		 * Let's put a sensible default so that we don't end up
++		 * in this situation.
++		 */
++		.min_rate = 120000000,
+ 	},
+ 	[RPI_FIRMWARE_V3D_CLK_ID] = {
+ 		.export = true,
+@@ -267,6 +280,19 @@ static struct clk_hw *raspberrypi_clk_register(struct raspberrypi_clk *rpi,
+ 		}
+ 	}
+ 
++	if (variant->min_rate) {
++		unsigned long rate;
++
++		clk_hw_set_rate_range(&data->hw, variant->min_rate, max_rate);
++
++		rate = raspberrypi_fw_get_rate(&data->hw, 0);
++		if (rate < variant->min_rate) {
++			ret = raspberrypi_fw_set_rate(&data->hw, variant->min_rate, 0);
++			if (ret)
++				return ERR_PTR(ret);
++		}
++	}
++
+ 	return &data->hw;
+ }
+ 
+-- 
+2.35.1
+

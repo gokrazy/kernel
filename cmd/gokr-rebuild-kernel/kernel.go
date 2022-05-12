@@ -51,6 +51,16 @@ var patchFiles = []string{
 	"0301-zero2w.patch",
 	"0302-zero2w.patch",
 	"0303-zero2w.patch",
+	// The following 04* patches fix booting with newer firmware versions:
+	// https://github.com/raspberrypi/firmware/issues/1726
+	// https://github.com/torvalds/linux/commit/12c90f3f27bb3ad0dd3fad1550fec87091aa3329
+	"0401-clk-bcm-rpi-Add-variant-structure.patch",
+	// https://github.com/torvalds/linux/commit/542acfec4e313c001f9b82332f4fa2848ec7bf58
+	"0402-clk-bcm-rpi-Set-a-default-minimum-rate.patch",
+	// https://github.com/torvalds/linux/commit/e9d6cea2af1cf8d84287ff2287b6cd776f7475d2
+	"0403-clk-bcm-rpi-Run-some-clocks-at-the-minimum-rate-allo.patch",
+	// https://www.spinics.net/lists/arm-kernel/msg975291.html
+	"0404-vec.patch",
 }
 
 func copyFile(dest, src string) error {
