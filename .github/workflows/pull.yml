@@ -35,12 +35,15 @@ jobs:
         TRAVIS_PULL_REQUEST: ${{ github.event.pull_request.number }}
         TRAVIS_PULL_REQUEST_BRANCH: ${{ github.event.pull_request.head.ref }}
         BOOTERY_URL: ${{ secrets.BOOTERY_URL }}
+        GOKRAZY_BAKERY_PASSWORD: ${{ secrets.GOKRAZY_BAKERY_PASSWORD }}
       if: ${{ env.GH_USER != 0 }}
       run: |
         mkdir -p extrafiles/github.com/gokrazy/breakglass/etc/
         echo 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFGSGdjns3/K3vwrQvwtvEMruFIqDtV//CHWVLUm4XNt michael@midna' > extrafiles/github.com/gokrazy/breakglass/etc/breakglass.authorized_keys
         mkdir -p flags/github.com/gokrazy/breakglass/
         echo '-authorized_keys=/etc/breakglass.authorized_keys' > flags/github.com/gokrazy/breakglass/flags.txt
+        mkdir -p ~/.config/gokrazy
+        echo -n "${GOKRAZY_BAKERY_PASSWORD}" > ~/.config/gokrazy/http-password.txt
         GOPROXY=direct go install github.com/gokrazy/autoupdate/cmd/...@latest
         GOPROXY=direct go install github.com/gokrazy/tools/cmd/gokr-packer@latest
         if gokr-has-label please-boot; then gokr-boot -require_label=please-boot -set_label=please-merge -bootery_url=$BOOTERY_URL -update_root; fi
