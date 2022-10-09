@@ -1040,6 +1040,8 @@ CONFIG_SND_SOC_TEGRA_ALC5632=y
 CONFIG_SND_SOC_TEGRA_MAX98090=y
 CONFIG_SND_SOC_TEGRA_RT5677=y
 
+# for easy sandboxing with go-landlock
+CONFIG_SECURITY_LANDLOCK=y
 `
 
 func downloadKernel() error {
