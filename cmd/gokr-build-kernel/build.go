@@ -1041,6 +1041,16 @@ CONFIG_SND_SOC_TEGRA_ALC5632=y
 CONFIG_SND_SOC_TEGRA_MAX98090=y
 CONFIG_SND_SOC_TEGRA_RT5677=y
 
+##
+## file: drivers/w1/Kconfig
+## file: drivers/w1/masters/Kconfig
+## file: drivers/w1/slaves/Kconfig
+##
+CONFIG_W1=y
+CONFIG_W1_MASTER_GPIO=y
+CONFIG_W1_SLAVE_THERM=y
+CONFIG_GPIOLIB=y
+
 # for easy sandboxing with go-landlock
 CONFIG_SECURITY_LANDLOCK=y
 
