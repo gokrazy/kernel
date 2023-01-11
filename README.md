@@ -1,12 +1,21 @@
 # gokrazy kernel repository
 
-This repository holds a pre-built Linux kernel image for the Raspberry
-Pi 3, used by the [gokrazy](https://github.com/gokrazy/gokrazy)
+This repository holds a pre-built Linux kernel image for the Raspberry Pi 3, Pi
+4, and Pi Zero 2W, used by the [gokrazy](https://github.com/gokrazy/gokrazy)
 project.
 
 The files in this repository are picked up automatically by
 `gokr-packer`, so you don’t need to interact with this repository
 unless you want to update the kernel to a custom version.
+
+## Cloning the kernel repository
+
+This repository clocks in at over 3 GB of disk usage, so you might want to clone
+it as a shallow clone:
+
+```
+git clone --depth=1 https://github.com/gokrazy/kernel
+```
 
 ## Updating the kernel
 
