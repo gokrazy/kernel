@@ -274,6 +274,7 @@ kernel/drivers/pwm/pwm-bcm2835.ko
 kernel/drivers/pwm/pwm-meson.ko
 kernel/drivers/pwm/pwm-rockchip.ko
 kernel/drivers/pwm/pwm-samsung.ko
+kernel/drivers/pwm/pwm-sun4i.ko
 kernel/drivers/pwm/pwm-tegra.ko
 kernel/drivers/pci/hotplug/acpiphp.ko
 kernel/drivers/pci/endpoint/pci-ep-cfs.ko

@@ -1,0 +1,165 @@
+From df13e9e7d73b3109ff1fad762a0057df6c177147 Mon Sep 17 00:00:00 2001
+From: Aaron Ogle <aaron@not-hard-to-find-but-not-going-to-check-it-in.com>
+Date: Tue, 21 Feb 2023 17:02:47 -0600
+Subject: [PATCH] try again2
+
+---
+ .../dts/allwinner/sun50i-h6-tanix-tx6.dts     | 49 +++++++++++++++++++
+ .../boot/dts/allwinner/sun50i-h6-tanix.dtsi   | 40 +++++++++++++++
+ 2 files changed, 89 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h6-tanix-tx6.dts b/arch/arm64/boot/dts/allwinner/sun50i-h6-tanix-tx6.dts
+index 9a38ff9b3..3fd850799 100644
+--- a/arch/arm64/boot/dts/allwinner/sun50i-h6-tanix-tx6.dts
++++ b/arch/arm64/boot/dts/allwinner/sun50i-h6-tanix-tx6.dts
+@@ -8,6 +8,55 @@
+ / {
+ 	model = "Tanix TX6";
+ 	compatible = "oranth,tanix-tx6", "allwinner,sun50i-h6";
++
++	aliases {
++		ethernet0 = &emac;
++ 		serial0 = &uart0;
++ 	};
++
++	reg_vcc5v: vcc5v {
++		/* board wide 5V supply directly from the DC jack */
++		compatible = "regulator-fixed";
++		regulator-name = "vcc-5v";
++		regulator-min-microvolt = <5000000>;
++		regulator-max-microvolt = <5000000>;
++		regulator-always-on;
++	};
++};
++
++&dwc3 {
++	status = "okay";
++};
++
++&emac {
++	phy-mode = "rmii";
++	phy-handle = <&ext_rmii_phy>;
++ 	status = "okay";
++};
++
++&mdio {
++	ext_rmii_phy: ethernet-phy@1 {
++		compatible = "ethernet-phy-ieee802.3-c22";
++		reg = <1>;
++	};
++};
++
++&mmc0 {
++ 	pinctrl-names = "default";
++ 	pinctrl-0 = <&mmc0_pins>;
++ 	vmmc-supply = <&reg_vcc3v3>;
++ 	cd-gpios = <&pio 5 6 GPIO_ACTIVE_LOW>;
++ 	bus-width = <4>;
++	status = "okay";
++};
++
++&mmc2 {
++	vmmc-supply = <&reg_vcc3v3>;
++	vqmmc-supply = <&reg_vcc3v3>;
++	non-removable;
++	cap-mmc-hw-reset;
++	bus-width = <8>;
++ 	status = "okay";
+ };
+ 
+ &r_ir {
+diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h6-tanix.dtsi b/arch/arm64/boot/dts/allwinner/sun50i-h6-tanix.dtsi
+index 4903d6358..29a93004f 100644
+--- a/arch/arm64/boot/dts/allwinner/sun50i-h6-tanix.dtsi
++++ b/arch/arm64/boot/dts/allwinner/sun50i-h6-tanix.dtsi
+@@ -11,6 +11,8 @@
+ / {
+ 	aliases {
+ 		serial0 = &uart0;
++		ethernet0 = &emac;
++		ethernet1 = &xr819;
+ 	};
+ 
+ 	chosen {
+@@ -81,6 +83,7 @@ wifi_pwrseq: wifi-pwrseq {
+ 		clocks = <&rtc CLK_OSC32K_FANOUT>;
+ 		clock-names = "ext_clock";
+ 		reset-gpios = <&r_pio 1 3 GPIO_ACTIVE_LOW>; /* PM3 */
++		post-power-on-delay-ms = <200>;
+ 	};
+ };
+ 
+@@ -96,6 +99,13 @@ &dwc3 {
+ 	status = "okay";
+ };
+ 
++&emac {
++	pinctrl-names = "default";
++	phy-mode = "rmii";
++	phy-handle = <&ext_rmii_phy>;
++	status = "okay";
++};
++
+ &ehci0 {
+ 	status = "okay";
+ };
+@@ -119,6 +129,17 @@ hdmi_out_con: endpoint {
+ 	};
+ };
+ 
++&i2s1 {
++	status = "okay";
++};
++
++&mdio {
++	ext_rmii_phy: ethernet-phy@1 {
++		compatible = "ethernet-phy-ieee802.3-c22";
++		reg = <1>;
++	};
++};
++
+ &mmc0 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&mmc0_pins>;
+@@ -129,12 +150,27 @@ &mmc0 {
+ };
+ 
+ &mmc1 {
++    pinctrl-names = "default";
++    pinctrl-0 = <&mmc1_pins>;
+ 	vmmc-supply = <&reg_vcc3v3>;
+ 	vqmmc-supply = <&reg_vcc1v8>;
+ 	mmc-pwrseq = <&wifi_pwrseq>;
+ 	bus-width = <4>;
+ 	non-removable;
+ 	status = "okay";
++
++    /*
++    * Explicitly define the sdio device, so that we can add an ethernet
++    * alias for it (which e.g. makes u-boot set a mac-address).
++    */
++    xr819: sdio_wifi@1 {
++        reg = <1>;
++        compatible = "xradio,xr819";
++        interrupt-parent = <&r_pio>;
++        local-mac-address = [dc 44 6d c0 ff ee];
++        interrupts = <1 0 IRQ_TYPE_EDGE_RISING>;        /* PM0 */
++        interrupt-names = "host-wake";
++    };
+ };
+ 
+ &mmc2 {
+@@ -161,6 +197,10 @@ &pio {
+ 	vcc-pg-supply = <&reg_vcc1v8>;
+ };
+ 
++&pwm {
++	status = "okay";
++};
++
+ &r_ir {
+ 	status = "okay";
+ };
+-- 
+2.38.1
+

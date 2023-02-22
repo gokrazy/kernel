@@ -46,6 +46,9 @@ var patchFiles = []string{
 	"0201-enable-spidev.patch",
 	// logo
 	"0001-gokrazy-logo.patch",
+	// Add xr819 fixes, AC200 ethernet fixes, and fix mmc boot for quadra
+	"0001-sun50i-h6-tanix-tx6-quadra.patch",
+	//"xr819-remove-mach-types.patch",
 }
 
 func copyFile(dest, src string) error {

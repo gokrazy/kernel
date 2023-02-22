@@ -40,6 +40,12 @@ CONFIG_ZONE_DMA=y
 CONFIG_ZONE_DMA32=y
 CONFIG_HOLES_IN_ZONE=y
 
+# For AC200 Ethernet for quadra
+CONFIG_REGULATOR_PWM=y
+CONFIG_COMMON_CLK_PWM=y
+CONFIG_PWM_SUN4I=y
+CONFIG_AC200_PHY=y
+
 # For the VL805 USB host controller on the Raspberry Pi 4:
 CONFIG_PCIE_BRCMSTB=y
 CONFIG_USB_NET_CDCETHER=y
@@ -1229,6 +1235,10 @@ func main() {
 	}
 
 	if err := copyFile("/tmp/buildresult/bcm2710-rpi-zero-2-w.dtb", "arch/arm64/boot/dts/broadcom/bcm2837-rpi-zero-2-w.dtb"); err != nil {
+		log.Fatal(err)
+	}
+
+	if err := copyFile("/tmp/buildresult/sun50i-h6-tanix-tx6.dtb", "arch/arm64/boot/dts/allwinner/sun50i-h6-tanix-tx6.dtb"); err != nil {
 		log.Fatal(err)
 	}
 
