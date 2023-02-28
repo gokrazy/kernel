@@ -41,6 +41,7 @@ jobs:
         .github/workflows/create-bakery.bash
         GOPROXY=direct go install github.com/gokrazy/autoupdate/cmd/...@latest
         GOPROXY=direct go install github.com/gokrazy/tools/cmd/gok@latest
+        gok -i bakery add .
         if gokr-has-label please-boot; then cd ~/gokrazy/bakery && gokr-boot -require_label=please-boot -set_label=please-merge -bootery_url=$BOOTERY_URL -update_root; fi
 
     - name: Amend Pull Request
