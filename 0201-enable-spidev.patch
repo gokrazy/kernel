@@ -47,15 +47,13 @@ index e1abe8c73..3d4baaeee 100644
  		};
  
  		i2c0: i2c@7e205000 {
-diff --git i/drivers/spi/spidev.c w/drivers/spi/spidev.c
-index 8cb4d92..069b16a 100644
---- i/drivers/spi/spidev.c.O	2022-08-02 09:00:10.818616171 +0200
-+++ w/drivers/spi/spidev.c	2022-08-02 09:00:41.386368745 +0200
-@@ -717,6 +717,7 @@
- 	{ .compatible = "menlo,m53cpld", .data = &spidev_of_check },
- 	{ .compatible = "cisco,spi-petra", .data = &spidev_of_check },
- 	{ .compatible = "micron,spi-authenta", .data = &spidev_of_check },
+--- i/drivers/spi/spidev.c	2023-04-26 17:21:32.926059627 +0200
++++ w/drivers/spi/spidev.c	2023-04-26 18:13:58.348607163 +0200
+@@ -731,6 +731,7 @@
+ }
+ 
+ static const struct of_device_id spidev_dt_ids[] = {
 +	{ .compatible = "brcm,bcm2835-spi", .data = &spidev_of_check },
- 	{},
- };
- MODULE_DEVICE_TABLE(of, spidev_dt_ids);
+ 	{ .compatible = "cisco,spi-petra", .data = &spidev_of_check },
+ 	{ .compatible = "dh,dhcom-board", .data = &spidev_of_check },
+ 	{ .compatible = "lineartechnology,ltc2488", .data = &spidev_of_check },
