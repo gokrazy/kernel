@@ -138,14 +138,14 @@ func main() {
 	}
 	defer os.RemoveAll(tmp)
 
-	cmd := exec.Command("go", "install", "github.com/gokrazy/kernel/cmd/gokr-build-kernel")
-	cmd.Env = append(os.Environ(), "GOOS=linux", "GOBIN="+tmp, "CGO_ENABLED=0")
+	buildPath := filepath.Join(tmp, "gokr-build-kernel")
+
+	cmd := exec.Command("go", "build", "-o", buildPath, "github.com/gokrazy/kernel/cmd/gokr-build-kernel")
+	cmd.Env = append(os.Environ(), "GOOS=linux", "CGO_ENABLED=0")
 	cmd.Stderr = os.Stderr
 	if err := cmd.Run(); err != nil {
 		log.Fatalf("%v: %v", cmd.Args, err)
 	}
-
-	buildPath := filepath.Join(tmp, "gokr-build-kernel")
 
 	var patchPaths []string
 	for _, filename := range patchFiles {
