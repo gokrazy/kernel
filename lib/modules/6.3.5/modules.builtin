@@ -1000,6 +1000,9 @@ kernel/drivers/i2c/busses/i2c-rcar.ko
 kernel/drivers/i2c/busses/i2c-brcmstb.ko
 kernel/drivers/i2c/busses/i2c-cros-ec-tunnel.ko
 kernel/drivers/i2c/muxes/i2c-mux-pca954x.ko
+kernel/drivers/media/mc/mc.ko
+kernel/drivers/media/v4l2-core/v4l2-dv-timings.ko
+kernel/drivers/media/v4l2-core/videodev.ko
 kernel/drivers/media/cec/core/cec.ko
 kernel/drivers/pps/pps_core.ko
 kernel/drivers/ptp/ptp.ko

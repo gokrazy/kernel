@@ -1042,6 +1042,14 @@ CONFIG_SND_SOC_TEGRA_RT5677=y
 
 # for easy sandboxing with go-landlock
 CONFIG_SECURITY_LANDLOCK=y
+
+# for v4l2 and uvcvideo
+CONFIG_MEDIA_SUPPORT=y
+CONFIG_MEDIA_CAMERA_SUPPORT=y
+CONFIG_MEDIA_USB_SUPPORT=y
+CONFIG_USB=y
+CONFIG_VIDEO_DEV=y
+CONFIG_USB_VIDEO_CLASS=m
 `
 
 func downloadKernel() error {
