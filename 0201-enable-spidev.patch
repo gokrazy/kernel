@@ -1,7 +1,7 @@
-diff --git a/arch/arm/boot/dts/bcm283x.dtsi b/arch/arm/boot/dts/bcm283x.dtsi
+diff --git a/arch/arm/boot/dts/broadcom/bcm283x.dtsi b/arch/arm/boot/dts/broadcom/bcm283x.dtsi
 index e1abe8c73..3d4baaeee 100644
---- a/arch/arm/boot/dts/bcm283x.dtsi
-+++ b/arch/arm/boot/dts/bcm283x.dtsi
+--- a/arch/arm/boot/dts/broadcom/bcm283x.dtsi
++++ b/arch/arm/boot/dts/broadcom/bcm283x.dtsi
 @@ -297,6 +297,14 @@ uart1_ctsrts_gpio42: uart1_ctsrts_gpio42 {
  				brcm,pins = <42 43>;
  				brcm,function = <BCM2835_FSEL_ALT5>;
