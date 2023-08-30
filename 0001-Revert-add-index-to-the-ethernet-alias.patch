@@ -13,14 +13,14 @@ https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=10
 The Raspberry Pi firmware won’t add the local-mac-address property if the
 ethernet alias has an index.
 ---
- arch/arm/boot/dts/bcm283x-rpi-smsc9512.dtsi | 2 +-
- arch/arm/boot/dts/bcm283x-rpi-smsc9514.dtsi | 2 +-
+ arch/arm/boot/dts/broadcom/bcm283x-rpi-smsc9512.dtsi | 2 +-
+ arch/arm/boot/dts/broadcom/bcm283x-rpi-smsc9514.dtsi | 2 +-
  2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/bcm283x-rpi-smsc9512.dtsi b/arch/arm/boot/dts/bcm283x-rpi-smsc9512.dtsi
+diff --git a/arch/arm/boot/dts/broadcom/bcm283x-rpi-smsc9512.dtsi b/arch/arm/boot/dts/broadcom/bcm283x-rpi-smsc9512.dtsi
 index 9a0599f..12c981e 100644
---- a/arch/arm/boot/dts/bcm283x-rpi-smsc9512.dtsi
-+++ b/arch/arm/boot/dts/bcm283x-rpi-smsc9512.dtsi
+--- a/arch/arm/boot/dts/broadcom/bcm283x-rpi-smsc9512.dtsi
++++ b/arch/arm/boot/dts/broadcom/bcm283x-rpi-smsc9512.dtsi
 @@ -1,6 +1,6 @@
  / {
  	aliases {
@@ -29,10 +29,10 @@ index 9a0599f..12c981e 100644
  	};
  };
  
-diff --git a/arch/arm/boot/dts/bcm283x-rpi-smsc9514.dtsi b/arch/arm/boot/dts/bcm283x-rpi-smsc9514.dtsi
+diff --git a/arch/arm/boot/dts/broadcom/bcm283x-rpi-smsc9514.dtsi b/arch/arm/boot/dts/broadcom/bcm283x-rpi-smsc9514.dtsi
 index dc7ae77..3f0a56e 100644
---- a/arch/arm/boot/dts/bcm283x-rpi-smsc9514.dtsi
-+++ b/arch/arm/boot/dts/bcm283x-rpi-smsc9514.dtsi
+--- a/arch/arm/boot/dts/broadcom/bcm283x-rpi-smsc9514.dtsi
++++ b/arch/arm/boot/dts/broadcom/bcm283x-rpi-smsc9514.dtsi
 @@ -1,6 +1,6 @@
  / {
  	aliases {
