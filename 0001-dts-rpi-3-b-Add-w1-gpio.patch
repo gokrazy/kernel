@@ -1,0 +1,59 @@
+From 8e26ded27610e0e1615110227f169495ca2fef61 Mon Sep 17 00:00:00 2001
+From: David Edmondson <dme@dme.org>
+Date: Mon, 20 Nov 2023 17:55:05 +0000
+Subject: [PATCH] dts/rpi-3-b: Add w1-gpio
+
+---
+ .../arm/boot/dts/broadcom/bcm2837-rpi-3-b.dts | 25 +++++++++++++++++++
+ 1 file changed, 25 insertions(+)
+
+diff --git a/arch/arm/boot/dts/broadcom/bcm2837-rpi-3-b.dts b/arch/arm/boot/dts/broadcom/bcm2837-rpi-3-b.dts
+index 61270340075c..d665182daf78 100644
+--- a/arch/arm/boot/dts/broadcom/bcm2837-rpi-3-b.dts
++++ b/arch/arm/boot/dts/broadcom/bcm2837-rpi-3-b.dts
+@@ -20,6 +20,14 @@ memory@0 {
+ 		device_type = "memory";
+ 		reg = <0 0x40000000>;
+ 	};
++
++	w1: onewire@0 {
++		compatible = "w1-gpio";
++		pinctrl-names = "default";
++		pinctrl-0 = <&w1_pins>;
++		gpios = <&gpio 4 0>;
++		status = "okay";
++	};
+ };
+ 
+ &bt {
+@@ -110,6 +118,12 @@ &gpio {
+ 			  "SD_DATA1_R",
+ 			  "SD_DATA2_R",
+ 			  "SD_DATA3_R";
++
++	w1_pins: w1_pins@0 {
++		brcm,pins = <4>;
++		brcm,function = <0>; // in (initially)
++		brcm,pull = <0>; // off
++	};
+ };
+ 
+ &pwm {
+@@ -152,3 +166,14 @@ &sdhost {
+ &wifi_pwrseq {
+ 	reset-gpios = <&expgpio 1 GPIO_ACTIVE_LOW>;
+ };
++
++
++/ {
++	__overrides__ {
++		gpiopin =       <&w1>,"gpios:4",
++				<&w1>,"reg:0",
++				<&w1_pins>,"brcm,pins:0",
++				<&w1_pins>,"reg:0";
++		pullup;		// Silently ignore unneeded parameter
++	};
++};
+-- 
+2.42.0
+

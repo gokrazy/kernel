@@ -46,6 +46,9 @@ var patchFiles = []string{
 	"0201-enable-spidev.patch",
 	// logo
 	"0001-gokrazy-logo.patch",
+	// Enable OneWire over the GPIO pins on the Raspberry Pi 3B.
+	// Derived from https://github.com/raspberrypi/linux/blob/rpi-5.15.y/arch/arm/boot/dts/overlays/w1-gpio-overlay.dts
+	"0001-dts-rpi-3-b-Add-w1-gpio.patch",
 }
 
 func copyFile(dest, src string) error {
