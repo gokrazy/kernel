@@ -1136,10 +1136,14 @@ kernel/drivers/ptp/ptp.ko
 kernel/drivers/ptp/ptp_dte.ko
 kernel/drivers/ptp/ptp_kvm.ko
 kernel/drivers/ptp/ptp-qoriq.ko
+kernel/drivers/w1/wire.ko
+kernel/drivers/w1/masters/w1-gpio.ko
+kernel/drivers/w1/slaves/w1_therm.ko
 kernel/drivers/power/reset/reboot-mode.ko
 kernel/drivers/power/reset/syscon-reboot-mode.ko
 kernel/drivers/power/supply/bq27xxx_battery.ko
 kernel/drivers/power/supply/bq27xxx_battery_i2c.ko
+kernel/drivers/power/supply/bq27xxx_battery_hdq.ko
 kernel/drivers/power/supply/qcom_smbb.ko
 kernel/drivers/power/supply/cros_peripheral_charger.ko
 kernel/drivers/hwmon/hwmon.ko
