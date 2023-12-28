@@ -1022,6 +1022,7 @@ CONFIG_SND_SOC=y
 ## file: sound/soc/bcm/Kconfig
 ##
 CONFIG_SND_BCM2835_SOC_I2S=y
+CONFIG_SND_BCM2835=y
 
 ##
 ## file: sound/soc/qcom/Kconfig

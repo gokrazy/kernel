@@ -1291,6 +1291,8 @@ kernel/drivers/hid/hid-microsoft.ko
 kernel/drivers/hid/hid-monterey.ko
 kernel/drivers/hid/hid-redragon.ko
 kernel/drivers/hid/usbhid/usbhid.ko
+kernel/drivers/staging/vc04_services/vchiq.ko
+kernel/drivers/staging/vc04_services/bcm2835-audio/snd-bcm2835.ko
 kernel/drivers/platform/chrome/cros_ec.ko
 kernel/drivers/platform/chrome/cros_ec_i2c.ko
 kernel/drivers/platform/chrome/cros_ec_spi.ko
