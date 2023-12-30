@@ -216,6 +216,10 @@ CONFIG_NETFILTER_XT_MATCH_COMMENT=y
 CONFIG_NETFILTER_XT_MATCH_MULTIPORT=y
 CONFIG_NETFILTER_XT_MARK=y
 
+# Enable policy routing (required for Tailscale)
+CONFIG_IP_MULTIPLE_TABLES=y
+CONFIG_IPV6_MULTIPLE_TABLES=y
+
 # TODO: trim the settings below to the minimum set that works (taken from debian)
 ##
 ## file: arch/arm64/Kconfig
