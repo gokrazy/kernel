@@ -20,6 +20,7 @@ kernel/fs/jbd2/jbd2.ko
 kernel/fs/squashfs/squashfs.ko
 kernel/fs/fat/fat.ko
 kernel/fs/fat/vfat.ko
+kernel/fs/exfat/exfat.ko
 kernel/fs/nfs/nfs.ko
 kernel/fs/nfs/nfsv2.ko
 kernel/fs/nfs/nfsv3.ko

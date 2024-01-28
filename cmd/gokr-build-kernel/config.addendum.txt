@@ -99,6 +99,9 @@ CONFIG_LIBCRC32C=y
 # For FUSE (for cpu(1)):
 CONFIG_FUSE_FS=y
 
+# For exfat compat
+CONFIG_EXFAT_FS=y
+
 # For periph.io:
 CONFIG_GPIO_SYSFS=y
 CONFIG_SPI_SPIDEV=y
