@@ -120,6 +120,9 @@ func main() {
 	var overwriteContainerExecutable = flag.String("overwrite_container_executable",
 		"",
 		"E.g. docker or podman to overwrite the automatically detected container executable")
+	var keepBuildContainer = flag.Bool("keep_build_container",
+		false,
+		"do not delete build container after building the kernel")
 	flag.Parse()
 	executable, err := getContainerExecutable()
 	if err != nil {
@@ -237,20 +240,18 @@ func main() {
 	log.Printf("compiling kernel")
 
 	var dockerRun *exec.Cmd
-	if execName == "podman" {
-		dockerRun = exec.Command(executable,
-			"run",
-			"--userns=keep-id",
-			"--rm",
-			"--volume", tmp+":/tmp/buildresult:Z",
-			"gokr-rebuild-kernel")
-	} else {
-		dockerRun = exec.Command(executable,
-			"run",
-			"--rm",
-			"--volume", tmp+":/tmp/buildresult:Z",
-			"gokr-rebuild-kernel")
+
+	dockerArgs := []string{"run", "--volume", tmp + ":/tmp/buildresult:Z"}
+
+	if !*keepBuildContainer {
+		dockerArgs = append(dockerArgs, "--rm")
 	}
+	if execName == "podman" {
+		dockerArgs = append(dockerArgs, "--userns=keep-id")
+	}
+	dockerArgs = append(dockerArgs, "gokr-rebuild-kernel")
+	dockerRun = exec.Command(executable, dockerArgs...)
+
 	dockerRun.Dir = tmp
 	dockerRun.Stdout = os.Stdout
 	dockerRun.Stderr = os.Stderr
