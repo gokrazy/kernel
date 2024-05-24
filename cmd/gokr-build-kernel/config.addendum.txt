@@ -102,6 +102,9 @@ CONFIG_FUSE_FS=y
 # For exfat compat
 CONFIG_EXFAT_FS=y
 
+# For bcachefs
+CONFIG_BCACHEFS_FS=y
+
 # For periph.io:
 CONFIG_GPIO_SYSFS=y
 CONFIG_SPI_SPIDEV=y
