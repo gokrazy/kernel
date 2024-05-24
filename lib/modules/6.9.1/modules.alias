@@ -3,6 +3,10 @@ alias crypto-cmac cmac
 alias cmac cmac
 alias crypto-ecdh ecdh_generic
 alias ecdh ecdh_generic
+alias of:N*T*Cbrcm,iproc-sba-v2C* bcm_sba_raid
+alias of:N*T*Cbrcm,iproc-sba-v2 bcm_sba_raid
+alias of:N*T*Cbrcm,iproc-sbaC* bcm_sba_raid
+alias of:N*T*Cbrcm,iproc-sba bcm_sba_raid
 alias sdio:c*v04B4dBD3D* brcmfmac
 alias sdio:c*v02D0d4355* brcmfmac
 alias sdio:c*v02D0dAAE8* brcmfmac

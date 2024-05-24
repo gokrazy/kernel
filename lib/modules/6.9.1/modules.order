@@ -1,6 +1,7 @@
 kernel/crypto/cmac.ko
 kernel/crypto/ecc.ko
 kernel/crypto/ecdh_generic.ko
+kernel/drivers/dma/bcm-sba-raid.ko
 kernel/drivers/net/wireless/broadcom/brcm80211/brcmutil/brcmutil.ko
 kernel/drivers/net/wireless/broadcom/brcm80211/brcmfmac/brcmfmac.ko
 kernel/drivers/net/wireless/broadcom/brcm80211/brcmfmac/wcc/brcmfmac-wcc.ko
