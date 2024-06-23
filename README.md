@@ -1,4 +1,4 @@
-# gokrazy kernel repository
+# gokrazy kernel: upstream Linux for the Raspberry Pi
 
 This repository holds a pre-built Linux kernel image for the Raspberry Pi 3, Pi
 4, and Pi Zero 2 W, used by the [gokrazy](https://gokrazy.org/) project.
@@ -6,6 +6,22 @@ This repository holds a pre-built Linux kernel image for the Raspberry Pi 3, Pi
 The files in this repository are picked up automatically by
 the `gok` tool, so you don’t need to interact with this repository
 unless you want to update the kernel to a custom version.
+
+## gokrazy kernel repository map
+
+| repository             | source         | devices                       |
+|------------------------|----------------|-------------------------------|
+| [gokrazy/kernel.rpi]   | [Raspberry Pi] | Pi 3, Pi 4, Pi 5, Pi Zero 2 W |
+| [gokrazy/kernel]       | [kernel.org]   | Pi 3, Pi 4, Pi Zero 2 W       |
+| [gokrazy/kernel.amd64] | [kernel.org]   | PC x86_64, VMs                |
+| [gokrazy/kernel.arm64] | [kernel.org]   | PC arm64, VMs                 |
+
+[Raspberry Pi]: https://github.com/raspberrypi/linux
+[kernel.org]: https://kernel.org/
+[gokrazy/kernel.rpi]: https://github.com/gokrazy/kernel.rpi
+[gokrazy/kernel]: https://github.com/gokrazy/kernel
+[gokrazy/kernel.amd64]: https://github.com/gokrazy/gokrazy/issues/263
+[gokrazy/kernel.arm64]: https://github.com/gokrazy/gokrazy/issues/263
 
 ## Cloning the kernel repository
 
