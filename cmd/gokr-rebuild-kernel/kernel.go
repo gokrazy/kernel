@@ -15,9 +15,9 @@ import (
 )
 
 const dockerFileContents = `
-FROM debian:buster
+FROM debian:bookworm
 
-RUN apt-get update && apt-get install -y crossbuild-essential-arm64 bc libssl-dev bison flex kmod python3
+RUN apt-get update && apt-get install -y crossbuild-essential-arm64 build-essential bc libssl-dev bison flex libelf-dev ncurses-dev ca-certificates zstd kmod python3
 
 COPY gokr-build-kernel /usr/bin/gokr-build-kernel
 {{- range $idx, $path := .Patches }}
