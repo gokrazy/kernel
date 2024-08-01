@@ -14,8 +14,8 @@ jobs:
     - name: Set up Go 1.x
       uses: actions/setup-go@v2
       with:
-        # Run on the latest minor release of Go 1.19:
-        go-version: ^1.19
+        # Run on the latest minor release of Go 1.22:
+        go-version: ^1.22
       id: go
 
     - name: Check out code into the Go module directory
@@ -25,7 +25,7 @@ jobs:
       run: |
         [ "$(gofmt -l $(find . -name '*.go') 2>&1)" = "" ]
 
-    - name: Get dependencies
+    - name: Build kernel
       run: |
-        go install ./cmd/gokr-rebuild-kernel
-        gokr-rebuild-kernel
+        GOPROXY=direct GOBIN=$PWD/_build go install github.com/gokrazy/autoupdate/cmd/gokr-rebuild-kernel@latest
+        (cd _build && ./gokr-rebuild-kernel -cross=arm64)

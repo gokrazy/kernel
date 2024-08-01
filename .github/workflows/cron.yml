@@ -15,8 +15,8 @@ jobs:
     - name: Set up Go 1.x
       uses: actions/setup-go@v2
       with:
-        # Run on the latest minor release of Go 1.19:
-        go-version: ^1.19
+        # Run on the latest minor release of Go 1.22:
+        go-version: ^1.22
       id: go
 
     - name: Check out code into the Go module directory
@@ -37,4 +37,4 @@ jobs:
         GH_AUTH_TOKEN: ${{ secrets.GH_AUTH_TOKEN }}
       if: ${{ env.GH_USER != 0 }}
       run: |
-        gokr-pull-kernel
+        gokr-pull-kernel -updater_path=_build/upstream-url.txt

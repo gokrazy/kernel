@@ -1,0 +1,12 @@
+/_build/lib
+/_build/vmlinuz
+/_build/Dockerfile
+/_build/gokr-rebuild-kernel
+/_build/bcm2710-rpi-3-b-plus.dtb
+/_build/bcm2710-rpi-3-b.dtb
+/_build/bcm2710-rpi-cm3.dtb
+/_build/bcm2710-rpi-zero-2-w.dtb
+/_build/bcm2710-rpi-zero-2.dtb
+/_build/bcm2711-rpi-4-b.dtb
+/_build/bcm2711-rpi-400.dtb
+/_build/bcm2711-rpi-cm4-io.dtb

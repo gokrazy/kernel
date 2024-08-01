@@ -14,8 +14,8 @@ jobs:
     - name: Set up Go 1.x
       uses: actions/setup-go@v2
       with:
-        # Run on the latest minor release of Go 1.19:
-        go-version: ^1.19
+        # Run on the latest minor release of Go 1.22:
+        go-version: ^1.22
       id: go
 
     - name: Check out code into the Go module directory
@@ -24,6 +24,13 @@ jobs:
     - name: Ensure all files were formatted as per gofmt
       run: |
         [ "$(gofmt -l $(find . -name '*.go') 2>&1)" = "" ]
+
+    - name: Install dependencies
+      run: |
+        GOPROXY=direct go install github.com/gokrazy/autoupdate/cmd/...@latest
+        GOPROXY=direct GOBIN=$PWD/_build go install github.com/gokrazy/autoupdate/cmd/gokr-rebuild-kernel@latest
+        GOPROXY=direct go install github.com/gokrazy/tools/cmd/gok@latest
+        GOPROXY=direct go install github.com/gokrazy/bakery/cmd/qemubootery@latest
 
     # TODO: once https://github.com/actions/runner/issues/662 is fixed, we can
     # remove the gokr-has-label guards and terminate a CI run instead.
@@ -39,12 +46,10 @@ jobs:
       if: ${{ env.GH_USER != 0 }}
       run: |
         .github/workflows/create-bakery.bash
-        GOPROXY=direct go install github.com/gokrazy/autoupdate/cmd/...@latest
-        GOPROXY=direct go install github.com/gokrazy/tools/cmd/gok@latest
         gok -i bakery add .
         if gokr-has-label please-boot; then cd ~/gokrazy/bakery && gokr-boot -require_label=please-boot -set_label=please-merge -bootery_url=$BOOTERY_URL -update_root; fi
 
-    - name: Amend Pull Request
+    - name: Build Linux kernel and amend Pull Request
       env:
         GITHUB_REPOSITORY: ${{ secrets.GITHUB_REPOSITORY }}
         GH_USER: ${{ secrets.GH_USER }}
@@ -54,7 +59,7 @@ jobs:
         BOOTERY_URL: ${{ secrets.BOOTERY_URL }}
       if: ${{ env.GH_USER != 0 }}
       run: |
-        if ! gokr-has-label please-merge && ! gokr-has-label please-boot; then go install ./cmd/gokr-rebuild-kernel && gokr-rebuild-kernel -overwrite_container_executable=docker && GOPROXY=direct go install github.com/gokrazy/autoupdate/cmd/gokr-amend@latest && gokr-amend -set_label=please-boot *.dtb lib vmlinuz; fi
+        if ! gokr-has-label please-merge && ! gokr-has-label please-boot; then (cd _build && ./gokr-rebuild-kernel -overwrite_container_executable=docker -cross=arm64) && gokr-amend -set_label=please-boot *.dtb lib vmlinuz; fi
 
     - name: Merge if boot successful
       env:
