@@ -21,7 +21,7 @@ unless you want to update the kernel to a custom version.
 [gokrazy/kernel.rpi]: https://github.com/gokrazy/kernel.rpi
 [gokrazy/kernel]: https://github.com/gokrazy/kernel
 [gokrazy/kernel.amd64]: https://github.com/gokrazy/kernel.amd64
-[gokrazy/kernel.arm64]: https://github.com/gokrazy/gokrazy/issues/263
+[gokrazy/kernel.arm64]: https://github.com/gokrazy/kernel.arm64
 
 ## Cloning the kernel repository
 
