@@ -1113,6 +1113,7 @@ kernel/drivers/usb/class/cdc-acm.ko
 kernel/drivers/usb/class/usblp.ko
 kernel/drivers/usb/storage/usb-storage.ko
 kernel/drivers/usb/serial/usbserial.ko
+kernel/drivers/usb/serial/ch341.ko
 kernel/drivers/usb/serial/cp210x.ko
 kernel/drivers/usb/serial/ftdi_sio.ko
 kernel/drivers/usb/misc/usb3503.ko
