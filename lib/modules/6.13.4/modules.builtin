@@ -1539,6 +1539,7 @@ kernel/net/netfilter/nft_chain_nat.ko
 kernel/net/netfilter/x_tables.ko
 kernel/net/netfilter/xt_tcpudp.ko
 kernel/net/netfilter/xt_mark.ko
+kernel/net/netfilter/xt_set.ko
 kernel/net/netfilter/xt_nat.ko
 kernel/net/netfilter/xt_LOG.ko
 kernel/net/netfilter/xt_MASQUERADE.ko
@@ -1546,6 +1547,8 @@ kernel/net/netfilter/xt_addrtype.ko
 kernel/net/netfilter/xt_comment.ko
 kernel/net/netfilter/xt_conntrack.ko
 kernel/net/netfilter/xt_multiport.ko
+kernel/net/netfilter/ipset/ip_set.ko
+kernel/net/netfilter/ipset/ip_set_hash_net.ko
 kernel/net/ipv4/ip_tunnel.ko
 kernel/net/ipv4/udp_tunnel.ko
 kernel/net/ipv4/tunnel4.ko
@@ -1574,6 +1577,7 @@ kernel/net/ipv6/sit.ko
 kernel/net/ipv6/ip6_udp_tunnel.ko
 kernel/net/packet/af_packet.ko
 kernel/net/bridge/bridge.ko
+kernel/net/bridge/br_netfilter.ko
 kernel/net/sunrpc/sunrpc.ko
 kernel/net/sunrpc/auth_gss/auth_rpcgss.ko
 kernel/net/sunrpc/auth_gss/rpcsec_gss_krb5.ko
