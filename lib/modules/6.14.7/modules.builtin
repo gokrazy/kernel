@@ -1546,10 +1546,13 @@ kernel/net/netfilter/nft_ct.ko
 kernel/net/netfilter/nft_limit.ko
 kernel/net/netfilter/nft_nat.ko
 kernel/net/netfilter/nft_reject.ko
+kernel/net/netfilter/nft_reject_inet.ko
 kernel/net/netfilter/nft_log.ko
 kernel/net/netfilter/nft_masq.ko
 kernel/net/netfilter/nft_redir.ko
 kernel/net/netfilter/nft_hash.ko
+kernel/net/netfilter/nft_fib.ko
+kernel/net/netfilter/nft_fib_inet.ko
 kernel/net/netfilter/nft_chain_nat.ko
 kernel/net/netfilter/x_tables.ko
 kernel/net/netfilter/xt_tcpudp.ko
@@ -1570,6 +1573,7 @@ kernel/net/ipv4/tunnel4.ko
 kernel/net/ipv4/netfilter/nf_defrag_ipv4.ko
 kernel/net/ipv4/netfilter/nf_reject_ipv4.ko
 kernel/net/ipv4/netfilter/nft_reject_ipv4.ko
+kernel/net/ipv4/netfilter/nft_fib_ipv4.ko
 kernel/net/ipv4/netfilter/ip_tables.ko
 kernel/net/ipv4/netfilter/iptable_filter.ko
 kernel/net/ipv4/netfilter/iptable_mangle.ko
@@ -1587,6 +1591,7 @@ kernel/net/ipv6/netfilter/ip6table_mangle.ko
 kernel/net/ipv6/netfilter/nf_defrag_ipv6.ko
 kernel/net/ipv6/netfilter/nf_reject_ipv6.ko
 kernel/net/ipv6/netfilter/nft_reject_ipv6.ko
+kernel/net/ipv6/netfilter/nft_fib_ipv6.ko
 kernel/net/ipv6/netfilter/ip6t_REJECT.ko
 kernel/net/ipv6/sit.ko
 kernel/net/ipv6/ip6_udp_tunnel.ko
