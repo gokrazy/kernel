@@ -1067,6 +1067,7 @@ kernel/drivers/net/ethernet/ti/davinci_mdio.ko
 kernel/drivers/net/ethernet/ti/k3-cppi-desc-pool.ko
 kernel/drivers/net/ethernet/ti/ti-am65-cpsw-nuss.ko
 kernel/drivers/net/fddi/skfp/skfp.ko
+kernel/drivers/net/wwan/wwan.ko
 kernel/drivers/net/xen-netfront.ko
 kernel/drivers/net/usb/r8152.ko
 kernel/drivers/net/usb/lan78xx.ko
@@ -1080,6 +1081,7 @@ kernel/drivers/net/usb/zaurus.ko
 kernel/drivers/net/usb/usbnet.ko
 kernel/drivers/net/usb/cdc_ncm.ko
 kernel/drivers/net/usb/lg-vl600.ko
+kernel/drivers/net/usb/cdc_mbim.ko
 kernel/drivers/net/usb/r8153_ecm.ko
 kernel/drivers/net/net_failover.ko
 kernel/drivers/vfio/vfio.ko
@@ -1127,6 +1129,7 @@ kernel/drivers/usb/host/xhci-mtk-hcd.ko
 kernel/drivers/usb/host/xhci-tegra.ko
 kernel/drivers/usb/class/cdc-acm.ko
 kernel/drivers/usb/class/usblp.ko
+kernel/drivers/usb/class/cdc-wdm.ko
 kernel/drivers/usb/storage/usb-storage.ko
 kernel/drivers/usb/serial/usbserial.ko
 kernel/drivers/usb/serial/ch341.ko
