@@ -1135,6 +1135,8 @@ kernel/drivers/usb/serial/usbserial.ko
 kernel/drivers/usb/serial/ch341.ko
 kernel/drivers/usb/serial/cp210x.ko
 kernel/drivers/usb/serial/ftdi_sio.ko
+kernel/drivers/usb/serial/option.ko
+kernel/drivers/usb/serial/usb_wwan.ko
 kernel/drivers/usb/misc/usb3503.ko
 kernel/drivers/usb/misc/brcmstb-usb-pinmap.ko
 kernel/drivers/usb/musb/musb_hdrc.ko
