@@ -1,7 +1,7 @@
 /_build/lib
 /_build/vmlinuz
 /_build/Dockerfile
-/_build/gokr-rebuild-kernel
+/_build/gokr-rebuild-kernel*
 /_build/bcm2710-rpi-3-b-plus.dtb
 /_build/bcm2710-rpi-3-b.dtb
 /_build/bcm2710-rpi-cm3.dtb
