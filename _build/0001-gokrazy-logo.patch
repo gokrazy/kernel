@@ -4,54 +4,10 @@ Date: Sun, 13 Jun 2021 09:20:06 +0200
 Subject: [PATCH] gokrazy logo
 
 ---
- drivers/video/logo/Kconfig                  |   4 +
- drivers/video/logo/Makefile                 |   1 +
- drivers/video/logo/logo.c                   |   4 +
  drivers/video/logo/logo_gokrazy_clut224.ppm | 883 ++++++++++++++++++++
- include/linux/linux_logo.h                  |   1 +
- 5 files changed, 893 insertions(+)
+ 1 file changed, 893 insertions(+)
  create mode 100644 drivers/video/logo/logo_gokrazy_clut224.ppm
 
-diff --git a/drivers/video/logo/Kconfig b/drivers/video/logo/Kconfig
-index 6d6f8c087..360a970f7 100644
---- a/drivers/video/logo/Kconfig
-+++ b/drivers/video/logo/Kconfig
-@@ -68,4 +68,8 @@ config LOGO_SUPERH_CLUT224
- 	depends on SUPERH
- 	default y
- 
-+config LOGO_GOKRAZY_CLUT224
-+	bool "224-color gokrazy Linux logo"
-+	default y
-+
- endif # LOGO
-diff --git a/drivers/video/logo/Makefile b/drivers/video/logo/Makefile
-index 895c60b84..7500454e2 100644
---- a/drivers/video/logo/Makefile
-+++ b/drivers/video/logo/Makefile
-@@ -13,6 +13,7 @@ obj-$(CONFIG_LOGO_SUN_CLUT224)		+= logo_sun_clut224.o
- obj-$(CONFIG_LOGO_SUPERH_MONO)		+= logo_superh_mono.o
- obj-$(CONFIG_LOGO_SUPERH_VGA16)		+= logo_superh_vga16.o
- obj-$(CONFIG_LOGO_SUPERH_CLUT224)	+= logo_superh_clut224.o
-+obj-$(CONFIG_LOGO_GOKRAZY_CLUT224)	+= logo_gokrazy_clut224.o
- 
- obj-$(CONFIG_SPU_BASE)			+= logo_spe_clut224.o
- 
-diff --git a/drivers/video/logo/logo.c b/drivers/video/logo/logo.c
-index 141f15a9a..60a0efba6 100644
---- a/drivers/video/logo/logo.c
-+++ b/drivers/video/logo/logo.c
-@@ -99,6 +99,10 @@ const struct linux_logo * __ref fb_find_logo(int depth)
- #ifdef CONFIG_LOGO_SUPERH_CLUT224
- 		/* SuperH Linux logo */
- 		logo = &logo_superh_clut224;
-+#endif
-+#ifdef CONFIG_LOGO_GOKRAZY_CLUT224
-+		/* gokrazy Linux logo */
-+		logo = &logo_gokrazy_clut224;
- #endif
- 	}
- 	return logo;
 diff --git a/drivers/video/logo/logo_gokrazy_clut224.ppm b/drivers/video/logo/logo_gokrazy_clut224.ppm
 new file mode 100644
 index 000000000..1276e5de0
@@ -941,18 +897,6 @@ index 000000000..1276e5de0
 +0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
 +0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
 +
-diff --git a/include/linux/linux_logo.h b/include/linux/linux_logo.h
-index d4d5b93ef..777fd6686 100644
---- a/include/linux/linux_logo.h
-+++ b/include/linux/linux_logo.h
-@@ -45,6 +45,7 @@ extern const struct linux_logo logo_superh_mono;
- extern const struct linux_logo logo_superh_vga16;
- extern const struct linux_logo logo_superh_clut224;
- extern const struct linux_logo logo_spe_clut224;
-+extern const struct linux_logo logo_gokrazy_clut224;
- 
- extern const struct linux_logo *fb_find_logo(int depth);
- #ifdef CONFIG_FB_LOGO_EXTRA
 -- 
 2.31.1
 
