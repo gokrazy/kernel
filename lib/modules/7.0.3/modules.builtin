@@ -1579,6 +1579,7 @@ kernel/net/netfilter/xt_mark.ko
 kernel/net/netfilter/xt_set.ko
 kernel/net/netfilter/xt_nat.ko
 kernel/net/netfilter/xt_LOG.ko
+kernel/net/netfilter/xt_MASQUERADE.ko
 kernel/net/netfilter/xt_addrtype.ko
 kernel/net/netfilter/xt_comment.ko
 kernel/net/netfilter/xt_conntrack.ko
