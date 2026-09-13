@@ -107,6 +107,7 @@ kernel/lib/fonts/font.ko
 kernel/lib/oid_registry.ko
 kernel/lib/ucs2_string.ko
 kernel/drivers/irqchip/irq-renesas-rzt2h.ko
+kernel/drivers/irqchip/irq-bcm2712-mip.ko
 kernel/drivers/irqchip/irq-bcm7038-l1.ko
 kernel/drivers/irqchip/irq-bcm7120-l2.ko
 kernel/drivers/irqchip/irq-brcmstb-l2.ko
@@ -170,6 +171,7 @@ kernel/drivers/phy/socionext/phy-uniphier-ahci.ko
 kernel/drivers/phy/tegra/phy-tegra-xusb.ko
 kernel/drivers/pinctrl/pinctrl-max77620.ko
 kernel/drivers/pinctrl/pinctrl-rockchip.ko
+kernel/drivers/pinctrl/pinctrl-rp1.ko
 kernel/drivers/pinctrl/pinctrl-single.ko
 kernel/drivers/pinctrl/pinctrl-zynqmp.ko
 kernel/drivers/pinctrl/bcm/pinctrl-bcm2835.ko
@@ -353,6 +355,7 @@ kernel/drivers/clk/clk-fsl-flexspi.ko
 kernel/drivers/clk/clk-plldig.ko
 kernel/drivers/clk/clk-pwm.ko
 kernel/drivers/clk/clk-rk808.ko
+kernel/drivers/clk/clk-rp1.ko
 kernel/drivers/clk/clk-hi655x.ko
 kernel/drivers/clk/clk-s2mps11.ko
 kernel/drivers/clk/clk-scmi.ko
@@ -871,6 +874,7 @@ kernel/drivers/block/virtio_blk.ko
 kernel/drivers/block/xen-blkfront.ko
 kernel/drivers/misc/qcom-coincell.ko
 kernel/drivers/misc/eeprom/eeprom_93cx6.ko
+kernel/drivers/misc/rp1/rp1_pci.ko
 kernel/drivers/mfd/bd9571mwv.ko
 kernel/drivers/mfd/cros_ec_dev.ko
 kernel/drivers/mfd/tps65219.ko
@@ -1032,6 +1036,7 @@ kernel/drivers/net/ethernet/8390/8390.ko
 kernel/drivers/net/ethernet/adaptec/starfire.ko
 kernel/drivers/net/ethernet/amd/xgbe/amd-xgbe.ko
 kernel/drivers/net/ethernet/apm/xgene/xgene-enet.ko
+kernel/drivers/net/ethernet/cadence/macb.ko
 kernel/drivers/net/ethernet/broadcom/genet/genet.ko
 kernel/drivers/net/ethernet/cavium/thunder/thunder_xcv.ko
 kernel/drivers/net/ethernet/cavium/thunder/thunder_bgx.ko

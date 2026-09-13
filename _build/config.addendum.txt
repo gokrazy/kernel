@@ -28,6 +28,14 @@ CONFIG_PCIE_BRCMSTB=y
 CONFIG_USB_NET_CDCETHER=y
 CONFIG_USB_VL600=y
 
+# Raspberry Pi 5:
+# Enable the MSI-X Interrupt Peripheral (MIP), for RP1.
+CONFIG_BCM2712_MIP=y
+# Enable the RP1 clock and GPIO.
+CONFIG_MISC_RP1=y
+# Enable the RP1 ethernet (Cadence MACB).
+CONFIG_MACB=y
+
 # For physically connecting the gokrazy bakery:
 CONFIG_USB_SERIAL=y
 CONFIG_USB_SERIAL_FTDI_SIO=y
