@@ -5,6 +5,7 @@ set -eu
 mkdir -p ~/gokrazy
 mkdir ~/gokrazy/bakery || { echo 'bakery already exists' >&2; exit 1; }
 # TODO: de-duplicate this config across {kernel,firmware} repositories
+# Explicitly set KernelPackage to make the CI independent of gokrazy’s default.
 cat > ~/gokrazy/bakery/config.json <<EOT
 {
     "Hostname": "gokr-boot-will-inject-the-hostname",
