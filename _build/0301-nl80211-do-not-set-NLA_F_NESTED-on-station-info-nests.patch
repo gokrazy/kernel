@@ -1,0 +1,43 @@
+nl80211: do not set NLA_F_NESTED on station info nests
+
+Partially reverts upstream commit 4b40378ac203 ("wifi: cfg80211: Add
+helper to pack station-level STA_INFO", merged in v7.3).
+
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -8049,7 +8049,7 @@
+ {
+ 	struct nlattr *sinfoattr, *bss_param;
+ 
+-	sinfoattr = nla_nest_start(msg, NL80211_ATTR_STA_INFO);
++	sinfoattr = nla_nest_start_noflag(msg, NL80211_ATTR_STA_INFO);
+ 	if (!sinfoattr)
+ 		return -EMSGSIZE;
+ 
+@@ -8142,7 +8142,7 @@
+ 	PUT_SINFO_U64(T_OFFSET, t_offset);
+ 
+ 	if (sinfo->filled & BIT_ULL(NL80211_STA_INFO_BSS_PARAM)) {
+-		bss_param = nla_nest_start(msg, NL80211_STA_INFO_BSS_PARAM);
++		bss_param = nla_nest_start_noflag(msg, NL80211_STA_INFO_BSS_PARAM);
+ 		if (!bss_param)
+ 			goto nla_put_failure;
+ 
+@@ -8184,7 +8184,7 @@
+ 		struct nlattr *tidsattr;
+ 		int tid;
+ 
+-		tidsattr = nla_nest_start(msg, NL80211_STA_INFO_TID_STATS);
++		tidsattr = nla_nest_start_noflag(msg, NL80211_STA_INFO_TID_STATS);
+ 		if (!tidsattr)
+ 			goto nla_put_failure;
+ 
+@@ -8197,7 +8197,7 @@
+ 			if (!tidstats->filled)
+ 				continue;
+ 
+-			tidattr = nla_nest_start(msg, tid + 1);
++			tidattr = nla_nest_start_noflag(msg, tid + 1);
+ 			if (!tidattr)
+ 				goto nla_put_failure;
+ 
