@@ -1,3 +1,5 @@
 0001-Revert-add-index-to-the-ethernet-alias.patch
 0201-enable-spidev.patch
 0001-gokrazy-logo.patch
+0300-Revert-wifi-cfg80211-support-MAC-address-filtering-in-station-dump.patch
+0301-nl80211-do-not-set-NLA_F_NESTED-on-station-info-nests.patch
